@@ -1,3 +1,7 @@
+### ER図
+[![Image from Gyazo](https://i.gyazo.com/e82304dca6c7425ac35605908d7d375a.png)](https://gyazo.com/e82304dca6c7425ac35605908d7d375a)
+
+
 ## サービス概要
 - 釣りでの餌、魚のもったいないをなくすサービス。
 - 釣り人同士が連絡を取りあい、餌の譲渡、魚の譲渡を行う。
