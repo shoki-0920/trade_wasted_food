@@ -5,26 +5,31 @@ services:
     image: postgres:15
     container_name: trade_wasted_food-db
     volumes:
-      - db_data:/var/lib/postgresql/data  # ボリュームを変更
+      - db_data:/var/lib/postgresql/data  # DBデータの永続化のためのボリューム
     environment:
-      POSTGRES_USER: postgres
+      POSTGRES_USER: trade_wasted_food
       POSTGRES_PASSWORD: password
       POSTGRES_DB: trade_wasted_food
     ports:
       - "5432:5432"
 
   web:
-    build: .
-    container_name: trade_wasted_food-web
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 4000 -b '0.0.0.0'"
-    ports:
-      - "4000:4000"
+    build: .  # コンテナビルド用の設定
     depends_on:
-      - db
-    environment:
-      DATABASE_URL: postgres://postgres:password@db:5432/trade_wasted_food
+      - db  # DBが起動するのを待つ
     volumes:
-      - .:/trade_wasted_food
+      - .:/app  # ホストとコンテナの間でソースコードを同期
+    environment:
+      POSTGRES_USER: trade_wasted_food
+      POSTGRES_PASSWORD: password
+      DATABASE_URL: postgres://trade_wasted_food:password@db/trade_wasted_food_development
+    ports:
+      - "3000:3000"
+  redis:  # Redisサービスの設定
+    image: redis:latest
+    container_name: trade_wasted_food-redis
+    ports:
+      - "6379:6379"
 
 volumes:
-  db_data:
+  db_data:  # データボリュームの設定
