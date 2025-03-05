@@ -1,0 +1,4 @@
+/* tailwindcssのデフォルトのプリプロセッサ設定 */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

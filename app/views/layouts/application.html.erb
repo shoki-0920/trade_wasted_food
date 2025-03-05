@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trade Wasted Food</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  
+  <!-- Tailwind CSS を読み込む -->
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_include_tag 'application', 'data-turbo-track': 'reload' %>
+</head>
+<body class="bg-gray-100 text-gray-900">
+  <header class="bg-blue-500 text-white p-4">
+    <nav>
+      <a href="/" class="text-lg font-bold">Home</a>
+      <!-- 必要に応じてリンクを追加 -->
+    </nav>
+  </header>
+
+  <main class="container mx-auto p-4">
+    <%= yield %> <!-- ここに個別のビューがレンダリングされます -->
+  </main>
+
+  <footer class="bg-gray-800 text-white text-center p-4 mt-4">
+    <p>&copy; 2025 Trade Wasted Food</p>
+  </footer>
+</body>
+</html>
