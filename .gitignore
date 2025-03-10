@@ -37,3 +37,6 @@
 
 /vendor/bundle
 vendor/
+
+/public/
+/node_modules/
