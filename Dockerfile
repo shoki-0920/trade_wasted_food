@@ -11,12 +11,6 @@ RUN apt-get update -qq && apt-get install -y \
   apt-get install -y nodejs && \
   npm install -g yarn
 
-
-
-
-
-
-
 # 作業ディレクトリを作成
 WORKDIR /app
 

@@ -9,10 +9,12 @@
   
   <!-- Tailwind CSS を読み込む -->
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-  <%= javascript_include_tag 'application', 'data-turbo-track': 'reload' %>
+
+  <%= javascript_importmap_tags %> <!-- これだけで十分 -->
 </head>
-<body class="bg-gray-100 text-gray-900">
+<body class=>
   <header class="bg-blue-500 text-white p-4">
+    <div class="text-red-500">このテキストは赤く表示されるはず</div>
     <nav>
       <a href="/" class="text-lg font-bold">Home</a>
       <!-- 必要に応じてリンクを追加 -->

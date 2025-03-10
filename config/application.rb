@@ -1,6 +1,5 @@
 require_relative "boot"
-
-require "rails/all"  # フル機能を有効にする
+require "rails/all"  # ここが重要です
 
 Bundler.require(*Rails.groups)
 
@@ -10,5 +9,8 @@ module TradeWastedFood
 
     # APIモードを無効にして、フルスタックモードにする
     config.api_only = false
+
+    # Propshaft を使用するための設定
+    config.assets.paths << Rails.root.join('app', 'assets', 'builds')  # ビルドアセットのパスを追加
   end
 end

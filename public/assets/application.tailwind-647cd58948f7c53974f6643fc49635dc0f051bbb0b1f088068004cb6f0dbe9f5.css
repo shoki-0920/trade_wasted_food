@@ -1,6 +1,0 @@
-/* app/assets/stylesheets/application.css */
-
-/* TailwindのCSSをインポート */
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
