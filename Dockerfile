@@ -11,16 +11,6 @@ RUN apt-get update -qq && apt-get install -y \
   apt-get install -y nodejs && \
   npm install -g yarn
 
-# Tailwind CSS のセットアップ
-RUN yarn add -D tailwindcss@3.0.0 postcss autoprefixer && \
-    yarn run tailwindcss init
-
-
-
-
-
-
-
 # 作業ディレクトリを作成
 WORKDIR /app
 
