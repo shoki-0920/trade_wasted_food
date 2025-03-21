@@ -1,6 +1,7 @@
 # Ruby 3.2.2 の公式イメージを使用
 FROM ruby:3.2.2
 
+ARG RUBY_VERSION=3.2.2
 # 必要な依存関係をインストール
 RUN apt-get update -qq && apt-get install -y \
   build-essential \
@@ -10,6 +11,7 @@ RUN apt-get update -qq && apt-get install -y \
   node-gyp \
   pkg-config \
   python-is-python3 \
+  libjemalloc2 \  
   && curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
   && apt-get install -y nodejs \
   && npm install -g yarn \
@@ -27,5 +29,4 @@ RUN bundle install --jobs 4 --retry 3
 COPY . .
 
 # デフォルトのエントリーポイント
-ENTRYPOINT ["bash", "-c", "exec rails server -b 0.0.0.0"]
-
+CMD ["bin/rails", "server", "-b", "0.0.0.0"]

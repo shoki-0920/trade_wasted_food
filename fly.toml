@@ -1,4 +1,4 @@
-# fly.toml app configuration file generated for trade-wasted-food on 2025-03-15T17:37:41+09:00
+# fly.toml app configuration file generated for trade-wasted-food on 2025-03-19T23:09:53+09:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
@@ -13,9 +13,7 @@ console_command = '/rails/bin/rails console'
   release_command = './bin/rails db:prepare'
 
 [env]
-  RAILS_ENV = "production"
-
-  PORT = '8080'
+  PORT = '3000'
 
 [processes]
   app = './bin/rails server'
