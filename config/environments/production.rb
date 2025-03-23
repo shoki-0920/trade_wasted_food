@@ -76,8 +76,13 @@ Rails.application.configure do
   # config.active_record.attributes_for_inspect = [ :id ]
 
   # Enable DNS rebinding protection and other `Host` header attacks.
-  config.hosts << "trade-wasted-food.fly.dev"
-  config.hosts << ENV["APP_HOST"] if ENV["APP_HOST"]
+  # 本番ホスト名（.env または fly.toml に設定）
+    config.hosts << ENV["APP_HOST"] if ENV["APP_HOST"].present?
+
+    # Fly.io 内部通信対応
+    config.hosts << /[a-z0-9]+\.internal/
+    config.hosts << IPAddr.new("0.0.0.0/0")
+    config.hosts << IPAddr.new("::/0")
 
   #
   # Skip DNS rebinding protection for the default health check endpoint.

@@ -15,6 +15,7 @@ console_command = '/rails/bin/rails console'
 [env]
   PORT = '3000'
   RAILS_ENV = "production"
+  APP_HOST = "trade-wasted-food.fly.dev"
 
 [processes]
   app = './bin/rails server'
