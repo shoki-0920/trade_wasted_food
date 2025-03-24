@@ -2,7 +2,7 @@ if Rails.env.production?
   Rails.application.config.session_store :redis_store,
     servers: {
       url: ENV.fetch("UPSTASH_REDIS_URL"),
-      password: ENV.fetch("REDIS_PASSWORD", nil),
+      password: ENV.fetch("REDIS_PASSWORD", nil)
     },
     expire_after: 90.minutes,
     key: "_your_app_session"

@@ -72,11 +72,11 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  # Only use :id for inspections in production.
-  # config.active_record.attributes_for_inspect = [ :id ]
+    # Only use :id for inspections in production.
+    # config.active_record.attributes_for_inspect = [ :id ]
 
-  # Enable DNS rebinding protection and other `Host` header attacks.
-  # 本番ホスト名（.env または fly.toml に設定）
+    # Enable DNS rebinding protection and other `Host` header attacks.
+    # 本番ホスト名（.env または fly.toml に設定）
     config.hosts << ENV["APP_HOST"] if ENV["APP_HOST"].present?
 
     # Fly.io 内部通信対応
