@@ -13,6 +13,7 @@ development:
 test:
   <<: *default
   database: trade_wasted_food_test
+  url: <%= ENV['DATABASE_URL_TEST'] %>
 
 production:
   <<: *default
