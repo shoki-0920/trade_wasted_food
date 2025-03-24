@@ -53,3 +53,5 @@ group :development, :test do
 
   gem "dotenv-rails"
 end
+
+gem "dockerfile-rails", ">= 1.7", group: :development

@@ -32,7 +32,7 @@ Rails.application.configure do
 
   # Log to STDOUT with the current request id as a default log tag.
   config.log_tags = [ :request_id ]
-  config.logger   = ActiveSupport::TaggedLogging.logger(STDOUT)
+  config.logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
 
   # Change to "debug" to log everything (including potentially personally-identifiable information!)
   config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
@@ -72,14 +72,18 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  # Only use :id for inspections in production.
-  config.active_record.attributes_for_inspect = [ :id ]
+    # Only use :id for inspections in production.
+    # config.active_record.attributes_for_inspect = [ :id ]
 
-  # Enable DNS rebinding protection and other `Host` header attacks.
-  # config.hosts = [
-  #   "example.com",     # Allow requests from example.com
-  #   /.*\.example\.com/ # Allow requests from subdomains like `www.example.com`
-  # ]
+    # Enable DNS rebinding protection and other `Host` header attacks.
+    # 本番ホスト名（.env または fly.toml に設定）
+    config.hosts << ENV["APP_HOST"] if ENV["APP_HOST"].present?
+
+    # Fly.io 内部通信対応
+    config.hosts << /[a-z0-9]+\.internal/
+    config.hosts << IPAddr.new("0.0.0.0/0")
+    config.hosts << IPAddr.new("::/0")
+
   #
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }

@@ -11,6 +11,6 @@ module TradeWastedFood
     config.api_only = false
 
     # Propshaft を使用するための設定
-    config.assets.paths << Rails.root.join('app', 'assets', 'builds')  # ビルドアセットのパスを追加
+    config.assets.paths << Rails.root.join("app", "assets", "builds")  # ビルドアセットのパスを追加
   end
 end
