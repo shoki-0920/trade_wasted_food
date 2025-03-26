@@ -10,7 +10,7 @@ module TradeWastedFood
     # APIモードを無効にして、フルスタックモードにする
     config.api_only = false
 
-    # Propshaft を使用するための設定
+    config.assets.paths << Rails.root.join("app", "assets", "images")
     config.assets.paths << Rails.root.join("app", "assets", "builds")  # ビルドアセットのパスを追加
   end
 end

@@ -10,15 +10,13 @@
   <!-- Tailwind CSS を読み込む -->
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
 
-  <%= javascript_importmap_tags %> <!-- これだけで十分 -->
+  <%= javascript_importmap_tags %> 
 </head>
 <body class=>
-  <header class="bg-blue-500 text-white p-4">
-    <div class="text-red-500">このテキストは赤く表示されるはず</div>
-    <nav>
-      <a href="/" class="text-lg font-bold">Home</a>
-      <!-- 必要に応じてリンクを追加 -->
-    </nav>
+<header class="bg-blue-500 text-white p-2 flex justify-between items-center">
+  <%= link_to root_path do %>
+  <%= image_tag "logo.svg", alt: "ロゴ", class: "h-12" %>
+  <% end %>
   </header>
 
   <main class="container mx-auto p-4">
