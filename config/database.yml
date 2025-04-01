@@ -6,9 +6,7 @@ default: &default
 
 development:
   <<: *default
-  database: trade_wasted_food
-  username: <%= ENV["POSTGRES_USER"] %>
-  password: <%= ENV["POSTGRES_PASSWORD"] %>
+  url: <%= ENV['DATABASE_URL'] %> 
 
 test:
   <<: *default
@@ -17,6 +15,6 @@ test:
 
 production:
   <<: *default
-  database: <%= ENV['DATABASE_URL'] %>
+  url: <%= ENV['DATABASE_URL'] %>  # database: を url: に変更
   username: trade_wasted_food
   password: <%= ENV["TRADE_WASTED_FOOD_DATABASE_PASSWORD"] %>

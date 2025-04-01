@@ -12,8 +12,11 @@
 
   <%= javascript_importmap_tags %> 
 </head>
-<body class=>
+<body class="bg-gray-100">
 <header class="bg-blue-500 text-white p-2 flex justify-between items-center">
+  <%= button_to 'Login', '/auth/auth0', method: :post, authenticity_token: true %>
+  <%= button_to 'Logout', 'auth/logout', method: :get %>
+
   <%= link_to root_path do %>
   <%= image_tag "logo.svg", alt: "ロゴ", class: "h-12" %>
   <% end %>
