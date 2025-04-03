@@ -1,16 +1,16 @@
 class Auth0Controller < ApplicationController
   def callback
     # OmniAuthから返される認証情報を取得
-    auth_info = request.env['omniauth.auth']
+    auth_info = request.env["omniauth.auth"]
 
     # raw_infoをセッションに保存
-    session[:userinfo] = auth_info['extra']['raw_info']
+    session[:userinfo] = auth_info["extra"]["raw_info"]
 
-    uid = auth_info['uid']
-    provider = auth_info['provider']
-    email = auth_info['info']['email']
-    name = auth_info['info']['name']
-    avatar = auth_info['info']['image']
+    uid = auth_info["uid"]
+    provider = auth_info["provider"]
+    email = auth_info["info"]["email"]
+    name = auth_info["info"]["name"]
+    avatar = auth_info["info"]["image"]
 
     # ユーザーを検索 or 作成
     user = User.find_or_initialize_by(uid: uid, provider: provider)
@@ -37,7 +37,7 @@ class Auth0Controller < ApplicationController
 
   def failure
     # 認証に失敗した場合のエラーメッセージを取得
-    @error_msg = request.params['message']
+    @error_msg = request.params["message"]
   end
 
   def logout
@@ -57,14 +57,14 @@ class Auth0Controller < ApplicationController
   def logout_url
     request_params = {
       returnTo: root_url,
-      client_id: AUTH0_CONFIG['auth0_client_id']
+      client_id: AUTH0_CONFIG["auth0_client_id"]
     }
 
-    URI::HTTPS.build(host: AUTH0_CONFIG['auth0_domain'], path: '/v2/logout', query: to_query(request_params)).to_s
+    URI::HTTPS.build(host: AUTH0_CONFIG["auth0_domain"], path: "/v2/logout", query: to_query(request_params)).to_s
   end
 
   # クエリパラメータを生成するためのヘルパーメソッド
   def to_query(hash)
-    hash.map { |k, v| "#{k}=#{CGI.escape(v)}" unless v.nil? }.reject(&:nil?).join('&')
+    hash.map { |k, v| "#{k}=#{CGI.escape(v)}" unless v.nil? }.reject(&:nil?).join("&")
   end
 end
