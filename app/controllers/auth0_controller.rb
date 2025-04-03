@@ -6,8 +6,33 @@ class Auth0Controller < ApplicationController
     # raw_infoをセッションに保存
     session[:userinfo] = auth_info['extra']['raw_info']
 
-    # 認証が成功した後にリダイレクトするURLを指定
-    redirect_to '/dashboard'
+    uid = auth_info['uid']
+    provider = auth_info['provider']
+    email = auth_info['info']['email']
+    name = auth_info['info']['name']
+    avatar = auth_info['info']['image']
+
+    # ユーザーを検索 or 作成
+    user = User.find_or_initialize_by(uid: uid, provider: provider)
+    user.update!(
+      email: email,
+      name: name,
+      avatar: avatar
+    )
+
+    # ユーザーをセッションに保存
+    session[:user_id] = user.id
+
+    # 初回ログインならプロフィール登録へ、それ以降はダッシュボードへ
+    if user.sign_in_count.nil? || user.sign_in_count == 0
+      user.update(sign_in_count: 1)  # 初回ログイン時にカウントをセット
+      flash[:notice] = "初回ログインです。プロフィールを登録してください。"
+      redirect_to edit_profile_path
+    else
+      user.increment!(:sign_in_count)  # 2回目以降のログイン時にカウントを増やす
+      flash[:notice] = "ログインしました。"
+      redirect_to dashboard_path
+    end
   end
 
   def failure

@@ -13,14 +13,20 @@
   <%= javascript_importmap_tags %> 
 </head>
 <body class="bg-gray-100">
-<header class="bg-blue-500 text-white p-2 flex justify-between items-center">
-  <%= button_to 'Login', '/auth/auth0', method: :post, authenticity_token: true %>
-  <%= button_to 'Logout', 'auth/logout', method: :get %>
-
+<header class="bg-blue-500 text-white p-4 flex justify-between items-center w-full">
   <%= link_to root_path do %>
-  <%= image_tag "logo.svg", alt: "ロゴ", class: "h-12" %>
+    <%= image_tag "logo.svg", alt: "ロゴ", class: "h-12" %>
   <% end %>
-  </header>
+
+  <div class="flex space-x-4"> 
+    <% if current_user %>
+      <%= link_to 'プロフィール編集', edit_profile_path, class: "bg-blue-500 text-white py-2 px-4 rounded-full" %>
+      <%= button_to 'Logout', '/auth/logout', method: :get, class: "bg-white text-blue-500 font-semibold py-2 px-6 rounded-full shadow-md border border-gray-300 hover:bg-gray-100 transition" %>
+    <% else %>
+      <%= button_to 'Login', '/auth/auth0', method: :post, authenticity_token: true, class: "bg-white text-blue-500 font-semibold py-2 px-6 rounded-full shadow-md border border-gray-300 hover:bg-gray-100 transition" %>
+    <% end %>
+  </div>
+</header>
 
   <main class="container mx-auto p-4">
     <%= yield %> <!-- ここに個別のビューがレンダリングされます -->
