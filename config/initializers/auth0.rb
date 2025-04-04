@@ -1,12 +1,14 @@
+AUTH0_CONFIG = Rails.application.config_for(:auth0)
+
 Rails.application.config.middleware.use OmniAuth::Builder do
   provider(
     :auth0,
-    ENV["AUTH0_CLIENT_ID"],
-    ENV["AUTH0_CLIENT_SECRET"],
-    ENV["AUTH0_DOMAIN"],
+    AUTH0_CONFIG["auth0_client_id"],
+    AUTH0_CONFIG["auth0_client_secret"],
+    AUTH0_CONFIG["auth0_domain"],
     callback_path: "/auth/auth0/callback",
     authorize_params: {
-      scope: "openid profile email"
+      scope: "openid profile"
     }
   )
 end

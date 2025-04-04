@@ -70,4 +70,7 @@ Rails.application.configure do
   # Tailwind CSSをプリコンパイル対象に追加
   config.assets.precompile += %w[application.css]
   config.assets.debug = true
+  config.hosts.clear  # これで全てのホストを許可
+  config.hosts << "localhost"
+  config.hosts << "127.0.0.1"
 end
