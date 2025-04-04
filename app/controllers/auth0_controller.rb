@@ -31,7 +31,7 @@ class Auth0Controller < ApplicationController
     else
       user.increment!(:sign_in_count)  # 2回目以降のログイン時にカウントを増やす
       flash[:notice] = "ログインしました。"
-      redirect_to dashboard_path
+      redirect_to posts_path
     end
   end
 
