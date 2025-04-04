@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   get "health" => "health#show"
   resources :users, only: [ :edit, :update ]
   resource :profile, only: [ :edit, :update ]  # プロフィール編集ページ
-  resources :posts, only: [:index] #投稿管理
+  resources :posts, only: [ :index ] # 投稿管理
   # Auth0コントローラーのルート
   get "/auth/auth0/callback", to: "auth0#callback"
   get "/auth/failure", to: "auth0#failure"
