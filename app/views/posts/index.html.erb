@@ -5,9 +5,14 @@
     <h2><%= post.title %></h2>
     <p><%= post.description %></p>
     <p>価格: ¥<%= post.price %></p>
-    <% if post.image.attached? %>
+    <% if post.image && post.image.attached? %>
       <%= image_tag post.image %>
+    <% else %>
+      <p>画像はまだアップロードされていません。</p>
     <% end %>
-    <p>投稿者: <%= post.user.name %></p>  <!-- もしuserがnameカラムを持っているなら -->
-  </div>
+    <% if post.user %>  <!-- ユーザーが存在するか確認 -->
+      <p>投稿者: <%= post.user.name %></p>
+    <% else %>
+      <p>投稿者情報がありません。</p>
+    <% end %>
 <% end %>
