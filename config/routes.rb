@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   resources :users, only: [ :edit, :update ]
   resource :profile, only: [ :edit, :update ]  # プロフィール編集ページ
   resources :posts, only: [ :index, :new, :create ] # 投稿管理
-  
+
 
 
   # Auth0コントローラーのルート

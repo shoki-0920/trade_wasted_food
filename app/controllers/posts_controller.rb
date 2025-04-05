@@ -11,7 +11,7 @@ class PostsController < ApplicationController
     @post = Post.new(post_params)
     @post.user = current_user
     if @post.save
-      redirect_to posts_path, notice: '投稿完了しました'
+      redirect_to posts_path, notice: "投稿完了しました"
     else
       render :new, status: :unprocessable_entity
     end
