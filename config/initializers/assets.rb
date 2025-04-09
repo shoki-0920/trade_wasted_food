@@ -1,1 +1,1 @@
-Rails.application.config.assets.precompile += %w[ application.tailwind.css ]
+Rails.application.config.assets.paths << Rails.root.join("app/assets/builds")

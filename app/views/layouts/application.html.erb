@@ -8,11 +8,18 @@
   <%= csp_meta_tag %>
   
   <!-- Tailwind CSS を読み込む -->
-  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+ <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
 
-  <%= javascript_importmap_tags %> 
+  <%= javascript_importmap_tags %>
+    <%= stylesheet_link_tag "application" %> 
 </head>
 <body class="bg-gray-100">
+  <div class="bg-yellow-300 p-4">
+  Tailwind 反映テスト
+</div>
+<div class="text-red-500 text-xl font-bold">
+  Tailwindテスト：赤字になるはず！
+</div>
 <header class="bg-blue-500 text-white p-4 flex justify-between items-center w-full">
   <%= link_to root_path do %>
     <%= image_tag "logo.svg", alt: "ロゴ", class: "h-12" %>
