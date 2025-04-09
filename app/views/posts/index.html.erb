@@ -1,18 +1,21 @@
 <h1>投稿一覧</h1>
 
 <% @posts.each do |post| %>
-  <div>
-    <h2><%= post.title %></h2>
-    <p><%= post.description %></p>
+  <%= link_to post_path(post), class: "block p-4 mb-4 border rounded hover:bg-gray-100" do %>
+    <h2 class="text-xl font-bold"><%= post.title %></h2>
+    <p><%= truncate(post.description, length: 100) %></p>
     <p>価格: ¥<%= post.price %></p>
+
     <% if post.image && post.image.attached? %>
-      <%= image_tag post.image %>
+      <%= image_tag post.image, class: "max-w-xs mt-2" %>
     <% else %>
-      <p>画像はまだアップロードされていません。</p>
+      <p class="text-sm text-gray-500 mt-2">画像はまだアップロードされていません。</p>
     <% end %>
-    <% if post.user %>  <!-- ユーザーが存在するか確認 -->
-      <p>投稿者: <%= post.user.name %></p>
+
+    <% if post.user %>
+      <p class="text-sm text-gray-600 mt-1">投稿者: <%= post.user.name %></p>
     <% else %>
-      <p>投稿者情報がありません。</p>
+      <p class="text-sm text-gray-500 mt-1">投稿者情報がありません。</p>
     <% end %>
+  <% end %>
 <% end %>
