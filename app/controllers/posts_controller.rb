@@ -21,6 +21,23 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
   end
 
+  def edit
+    @post = Post.find(params[:id])
+    redirect_to posts_path, alert: "権限がありません" unless @post.user == current_user
+  end
+
+  def update
+    @post = Post.find(params[:id])
+    if @post.update(post_params)
+      flash[:notice] = "投稿が更新されました"
+      redirect_to @post
+    else
+      render :edit
+    end
+  end
+
+
+
   private
 
   def post_params

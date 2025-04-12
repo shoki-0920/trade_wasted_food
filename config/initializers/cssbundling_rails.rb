@@ -1,4 +1,3 @@
+Rails.application.config.assets.paths << Rails.root.join("app/assets/builds")
+Rails.application.config.assets.precompile += %w[application.css]
 Rails.application.config.assets.css_compressor = nil
-
-# 'application.tailwind.css' を使う設定に変更
-Rails.application.config.assets.precompile += %w[application.tailwind.css]
