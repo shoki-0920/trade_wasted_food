@@ -1,6 +1,8 @@
-// app/javascript/application.js
+import "@hotwired/turbo-rails";
+import Rails from "@rails/ujs";
 
-import { Turbo } from "stimulus"  // Stimulusのインポート（もし使う場合）
-import { start } from "@rails/ujs";
+Rails.start(); // ← これを追加する！
 
-start();  // Rails UJSの初期化
+document.addEventListener("turbo:load", () => {
+  console.log("Turbo loaded!");
+});
