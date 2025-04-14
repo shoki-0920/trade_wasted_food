@@ -21,6 +21,10 @@
     <%= form.label :description, "説明" %>
     <%= form.text_area :description %>
   </div>
+  <div class="field">
+    <%= form.label :fishing_spot_id, "釣り場" %>
+    <%= form.collection_select :fishing_spot_id, FishingSpot.all, :id, :name, prompt: "選択してください" %>
+  </div>
 
   <div class="field">
     <%= form.label :price, "価格" %>

@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get 'fishing_spots/show'
+  get "fishing_spots/show"
   # 既存のUPパス（/up）を維持
   get "up" => "health#show"
 
@@ -12,7 +12,9 @@ Rails.application.routes.draw do
   resources :posts, only: [ :index, :new, :create, :show, :edit, :update, :destroy ] # 投稿管理
 
   get "fishing_spots/map", to: "fishing_spots#map"
-  resources :fishing_spots, only: [:index, :show]
+  resources :fishing_spots, only: [ :index, :show ] do
+    resources :posts, only: [ :index ]
+  end
 
   # Auth0コントローラーのルート
   get "/auth/auth0/callback", to: "auth0#callback"
