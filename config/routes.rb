@@ -10,7 +10,10 @@ Rails.application.routes.draw do
   resource :profile, only: [ :edit, :update ]  # プロフィール編集ページ
   resources :posts, only: [ :index, :new, :create, :show, :edit, :update, :destroy ] # 投稿管理
 
-
+  get "fishing_spots/map", to: "fishing_spots#map"
+  resources :fishing_spots, only: [ :index ] do
+    resources :posts, only: [ :index ]
+  end
 
   # Auth0コントローラーのルート
   get "/auth/auth0/callback", to: "auth0#callback"

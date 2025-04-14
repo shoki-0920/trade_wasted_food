@@ -1,4 +1,10 @@
-<h1>投稿一覧</h1>
+<h1>
+  <% if @fishing_spot %>
+    <%= @fishing_spot.name %>の投稿一覧
+  <% else %>
+    投稿一覧
+  <% end %>
+</h1>
 
 <% @posts.each do |post| %>
   <%= link_to post_path(post), class: "block p-4 mb-4 border rounded hover:bg-gray-100" do %>

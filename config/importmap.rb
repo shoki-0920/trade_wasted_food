@@ -3,3 +3,4 @@
 pin "application"
 pin "@rails/ujs", to: "@rails--ujs.js" # @7.1.3
 pin "@hotwired/turbo-rails", to: "@hotwired--turbo-rails.js" # @2.1.0
+pin "custom/map", to: "custom/map.js"

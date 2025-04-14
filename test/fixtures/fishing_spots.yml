@@ -1,0 +1,12 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: "Test Fishing Spot One"
+  latitude: 34.6937
+  longitude: 135.5023
+  # 必要な他の属性を記述
+
+two:
+  name: "Test Fishing Spot Two"
+  latitude: 35.0116
+  longitude: 135.7681

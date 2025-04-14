@@ -1,6 +1,12 @@
 class PostsController < ApplicationController
   def index
-    @posts = Post.all.order(created_at: :desc) # 新しい投稿を上に表示
+    if
+      params[:fishing_spot_id].present?
+      @fishing_spot = FishingSpot.find(params[:fishing_spot_id])
+      @posts = @fishing_spot.posts.order(created_at: :desc)
+    else
+      @posts = Post.all.order(created_at: :desc)
+    end
   end
 
   def new
@@ -47,6 +53,6 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:title, :description, :price, :image)
+    params.require(:post).permit(:title, :description, :price, :image, :fishing_spot_id)
   end
 end
