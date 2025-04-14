@@ -1,0 +1,10 @@
+<h1><%= @fishing_spot.name %></h1>
+<p><%= @fishing_spot.description %></p>
+
+<h2>関連する投稿一覧</h2>
+<% @posts.each do |post| %>
+  <div>
+    <h3><%= post.title %></h3>
+    <p><%= post.description %></p>
+  </div>
+<% end %>

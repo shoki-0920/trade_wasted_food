@@ -1,0 +1,26 @@
+<h1 class="text-xl font-bold mb-4">釣り場マップ</h1>
+
+<div id="map" class="w-full h-[500px] rounded-xl shadow-lg"></div>
+
+<script>
+  const fishingSpots = <%= raw(@fishing_spots.to_json(only: [:id, :name, :latitude, :longitude])) %>;
+
+  function initMap() {
+    const map = new google.maps.Map(document.getElementById("map"), {
+      center: { lat: 34.6937, lng: 135.5023 }, // 大阪あたりに中心
+      zoom: 10,
+    });
+
+    fishingSpots.forEach(spot => {
+      const marker = new google.maps.Marker({
+        position: { lat: spot.latitude, lng: spot.longitude },
+        map: map,
+        title: spot.name,
+      });
+
+      marker.addListener("click", () => {
+        window.location.href = `/fishing_spots/${spot.id}/posts`;
+      });
+    });
+  }
+</script>
