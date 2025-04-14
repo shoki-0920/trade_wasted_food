@@ -1,15 +1,16 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  title: MyString
-  description: MyText
-  price: 1
-  image: MyString
-  user: one
+  title: "MyString"
+  content: "MyText"
+  user_id: 1
+  other_attribute: "MyString"
+  fishing_spot_id: <%= ActiveRecord::FixtureSet.identify(fishing_spots(:one)) %>
 
 two:
-  title: MyString
-  description: MyText
-  price: 1
-  image: MyString
-  user: two
+  title: "Another Title"
+  content: "Some other text"
+  user_id: 1
+  other_attribute: "Other String"
+  fishing_spot_id: <%= ActiveRecord::FixtureSet.identify(fishing_spots(:two)) %>
+
