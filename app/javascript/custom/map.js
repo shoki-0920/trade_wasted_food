@@ -1,15 +1,28 @@
 document.addEventListener("turbo:load", () => {
-  if (typeof google === "undefined") return;
-
+  console.log("🚀 turbo:load イベント発火");
+  if (typeof google === "undefined") {
+    console.error("❌ google オブジェクトが存在しません");
+    return;
+  }
+  
   const mapElement = document.getElementById("map");
-  if (!mapElement || typeof fishingSpots === "undefined") return;
-
+  if (!mapElement) {
+    console.error("❌ #map 要素が見つかりません");
+    return;
+  }
+  if (typeof fishingSpots === "undefined") {
+    console.error("❌ fishingSpots 変数が undefined です");
+    return;
+  }
+  
+  console.log("✅ Google Maps と fishingSpots の読み込み確認");
+  
   const map = new google.maps.Map(mapElement, {
     center: { lat: 34.6937, lng: 135.5023 }, // 初期表示：大阪
     zoom: 10,
   });
 
-  // 🎣 釣り場のピン
+  // 🎣 釣り場のピンを表示
   fishingSpots.forEach(spot => {
     const marker = new google.maps.Marker({
       position: { lat: spot.latitude, lng: spot.longitude },
@@ -25,6 +38,7 @@ document.addEventListener("turbo:load", () => {
   // 📍 現在地マーカー表示用関数
   const showCurrentLocation = (lat, lng) => {
     const currentPos = { lat, lng };
+    console.log("🖥️ 現在地を表示: ", currentPos);
 
     // 中心を現在地に移動
     map.setCenter(currentPos);
@@ -57,11 +71,12 @@ document.addEventListener("turbo:load", () => {
     });
   };
 
-  // 🌐 現在地取得（失敗しても仮の座標を使う）
-  if (navigator.geolocation) {
+  // 🌐 geolocation の利用チェック
+  if ("geolocation" in navigator) {
+    console.log("✅ navigator.geolocation が利用可能です");
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        console.log("✅ 現在地取得成功", position); // ← ここ追加！
+        console.log("✅ 現在地取得成功", position);
         showCurrentLocation(
           position.coords.latitude,
           position.coords.longitude
