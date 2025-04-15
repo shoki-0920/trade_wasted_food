@@ -7,3 +7,16 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+
+FishingSpot.create!(
+  name: "貝塚人工島水路",
+  latitude: 34.4374,
+  longitude: 135.3721
+)
+
+FishingSpot.create!(
+  name: "とっとパーク小島",
+  latitude: 34.2886,
+  longitude: 135.0889
+)
