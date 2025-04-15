@@ -23,6 +23,9 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :chat_rooms, only: [ :show ]
+
+
   # Auth0コントローラーのルート
   get "/auth/auth0/callback", to: "auth0#callback"
   get "/auth/failure", to: "auth0#failure"

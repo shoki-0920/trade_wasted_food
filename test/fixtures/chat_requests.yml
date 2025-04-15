@@ -4,10 +4,10 @@ one:
   requester: one
   receiver: one
   post: one
-  status: MyString
+  status: pending
 
 two:
   requester: two
   receiver: two
   post: two
-  status: MyString
+  status: pending

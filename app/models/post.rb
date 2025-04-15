@@ -4,5 +4,4 @@ class Post < ApplicationRecord
   belongs_to :fishing_spot
 
   has_many :chat_requests, dependent: :destroy
-
 end
