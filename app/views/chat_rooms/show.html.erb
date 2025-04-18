@@ -1,0 +1,18 @@
+<h1>チャットルーム</h1>
+
+<div class="space-y-2">
+  <% @messages.each do |message| %>
+    <div class="<%= message.user == current_user ? 'text-right' : 'text-left' %>">
+      <span class="inline-block bg-gray-200 p-2 rounded">
+        <%= message.content %>
+      </span>
+    </div>
+  <% end %>
+</div>
+
+<%= form_with model: [@chat_room, @message], local: true do |f| %>
+  <div class="mt-4">
+    <%= f.text_area :content, rows: 2, class: "w-full border p-2 rounded" %>
+  </div>
+  <%= f.submit "送信", class: "mt-2 bg-blue-500 text-white px-4 py-2 rounded" %>
+<% end %>
