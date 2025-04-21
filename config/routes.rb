@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get 'chat_rooms/show'
+  get "chat_rooms/show"
   # 既存のUPパス（/up）を維持
   get "up" => "health#show"
 
@@ -24,8 +24,8 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :chat_rooms, only: [:index, :show, :destroy] do
-    resources :messages, only: [:create]
+  resources :chat_rooms, only: [ :index, :show, :destroy ] do
+    resources :messages, only: [ :create ]
   end
 
   # Auth0コントローラーのルート

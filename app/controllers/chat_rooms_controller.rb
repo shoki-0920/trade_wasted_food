@@ -1,5 +1,5 @@
 class ChatRoomsController < ApplicationController
-  before_action :set_chat_room, only: [:show]
+  before_action :set_chat_room, only: [ :show ]
 
   # チャットルームの一覧
   def index
@@ -16,7 +16,7 @@ class ChatRoomsController < ApplicationController
 
   # 新しいチャットルーム作成
   def create
-    @chat_room = ChatRoom.find_by(user1: current_user, user2: params[:user_id]) || 
+    @chat_room = ChatRoom.find_by(user1: current_user, user2: params[:user_id]) ||
                  ChatRoom.find_by(user1: params[:user_id], user2: current_user)
 
     # 既存のチャットルームがなければ新しく作成

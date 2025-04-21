@@ -6,7 +6,7 @@ class ChatRequest < ApplicationRecord
   scope :pending, -> { where(status: "pending") }
 
   validates :requester_id, uniqueness: {
-    scope: [:receiver_id, :post_id],
+    scope: [ :receiver_id, :post_id ],
     message: "はすでに申請済みです（承認待ち）"
   }, if: :pending?
 

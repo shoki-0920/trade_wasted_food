@@ -1,7 +1,7 @@
 class ChatRequestsController < ApplicationController
   def create
     @post = Post.find(params[:chat_request][:post_id])
-  
+
     @chat_request = ChatRequest.new(
       chat_request_params.merge(
         requester_id: current_user.id,
@@ -9,15 +9,15 @@ class ChatRequestsController < ApplicationController
         status: "pending"
       )
     )
-  
+
     if @chat_request.save
       redirect_to @post, notice: "チャット申請が送信されました。"
     else
       redirect_to @post, alert: "チャット申請の送信に失敗しました。"
     end
   end
-  
-  
+
+
 
   def approve
     @chat_request = ChatRequest.find(params[:id])
