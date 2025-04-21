@@ -1,18 +1,23 @@
 class ChatRequestsController < ApplicationController
   def create
-    # 新しいチャット申請を作成
-    @chat_request = ChatRequest.new(chat_request_params)
-    @chat_request.requester = current_user  # ログイン中のユーザーがリクエスター
-    @chat_request.status = "pending"  # 最初は承認待ち（保留中）
+    @post = Post.find(params[:chat_request][:post_id])
+
+    @chat_request = ChatRequest.new(
+      chat_request_params.merge(
+        requester_id: current_user.id,
+        receiver_id: @post.user.id,
+        status: "pending"
+      )
+    )
 
     if @chat_request.save
-      # 成功した場合、投稿詳細ページにリダイレクト
-      redirect_to @chat_request.post, notice: "チャット申請が送信されました。"
+      redirect_to @post, notice: "チャット申請が送信されました。"
     else
-      # 失敗した場合、投稿詳細ページに戻る
-      redirect_to @chat_request.post, alert: "チャット申請の送信に失敗しました。"
+      redirect_to @post, alert: "チャット申請の送信に失敗しました。"
     end
   end
+
+
 
   def approve
     @chat_request = ChatRequest.find(params[:id])

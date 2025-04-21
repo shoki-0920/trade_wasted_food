@@ -1,0 +1,18 @@
+<h1 class="text-xl font-bold mb-4">チャット一覧</h1>
+
+<ul class="space-y-4">
+  <% @chat_rooms.each do |room| %>
+    <% other_user = room.user1 == current_user ? room.user2 : room.user1 %>
+    <li class="p-4 border rounded shadow">
+      <div class="flex justify-between items-center">
+        <div>
+          <p class="font-semibold">相手: <%= other_user.name %></p>
+        </div>
+        <div>
+          <%= link_to "チャットへ", chat_room_path(room), class: "text-blue-500 underline" %>
+        </div>
+        <%= button_to "削除", chat_room_path(room), method: :delete, data: { confirm: "このチャットを削除しますか？" }, class: "text-red-500 hover:underline" %>
+      </div>
+    </li>
+  <% end %>
+</ul>
