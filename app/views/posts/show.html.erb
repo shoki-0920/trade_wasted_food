@@ -20,9 +20,14 @@
   </div>
 <% end %>
 
-<% if current_user.id != @post.user.id %> 
-  <!-- 投稿主じゃない場合 -->
-  <%= button_to 'チャット申請', chat_requests_path(chat_request: { post_id: @post.id, receiver_id: @post.user.id }), method: :post %>
+<% if current_user != @post.user %>
+  <% existing_request = ChatRequest.find_by(post_id: @post.id, requester_id: current_user.id, receiver_id: @post.user.id) %>
+
+  <% if existing_request&.status == 'pending' %>
+    <div class="text-yellow-500">申請中です</div>
+  <% else %>
+    <%= button_to 'チャット申請', chat_requests_path(chat_request: { post_id: @post.id, receiver_id: @post.user.id }), method: :post %>
+  <% end %>
 <% else %>
   <!-- 投稿主の場合 -->
   <% @post.chat_requests.pending.each do |chat_request| %>
@@ -30,6 +35,7 @@
     <%= button_to '拒否', reject_chat_request_path(chat_request), method: :post %>
   <% end %>
 <% end %>
+
 
 <div class="mt-6 flex space-x-4">
   <%= link_to '編集', edit_post_path(@post), class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" %>

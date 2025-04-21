@@ -122,6 +122,10 @@ GEM
     globalid (1.2.1)
       activesupport (>= 6.1)
     hashie (5.0.0)
+    hotwire-rails (0.1.3)
+      rails (>= 6.0.0)
+      stimulus-rails
+      turbo-rails
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
     importmap-rails (2.1.0)
@@ -356,6 +360,8 @@ GEM
       net-sftp (>= 2.1.2)
       net-ssh (>= 2.8.0)
       ostruct
+    stimulus-rails (1.3.4)
+      railties (>= 6.0.0)
     stringio (3.1.5)
     thor (1.3.2)
     thruster (0.1.12)
@@ -364,6 +370,9 @@ GEM
     thruster (0.1.12-x86_64-darwin)
     thruster (0.1.12-x86_64-linux)
     timeout (0.4.3)
+    turbo-rails (2.0.13)
+      actionpack (>= 7.1.0)
+      railties (>= 7.1.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (3.1.4)
@@ -395,6 +404,7 @@ DEPENDENCIES
   debug
   dockerfile-rails (>= 1.7)
   dotenv-rails
+  hotwire-rails
   importmap-rails
   kamal
   omniauth-auth0 (~> 3.0)
