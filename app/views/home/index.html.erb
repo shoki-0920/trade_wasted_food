@@ -1,0 +1,53 @@
+<div class="relative px-12 mt-0 mb-10 h-[300px] bg-cover bg-center"
+     style="background-image: url('<%= asset_path("background.webp") %>');">
+  <div class="absolute inset-0 flex flex-col items-center justify-center ">
+    <h1 class="text-7xl text-black font-water font-bold">BEITORE</h1>
+    <h2 class="mt-4 text-2xl font-bold text-grey">～～その餌・魚無駄にしていませんか？？～～</h2>
+  </div>
+</div>
+
+
+<div class="flex justify-center px-16 gap-30">
+  <div class="text-lg font-bold justify-center mt-6 fade-in-up fade-delay-0">
+    <p>釣り人の皆さんこんにちは！！ベイトレです！！</p>
+    <p>海に返してもこのように死んでしまうことも多々ありますよね？？</p>
+    <p>釣りは楽しいものですが、魚はつられると弱ってしまいます</p>
+    <p>持って帰るのが調理もめんどくさい、海にそのまま死んだ魚を</p>
+    <p>海に流してもお魚さんに申し訳ない.....</p>
+    <p>かといって周りの方に話しかけずらい方などもいらっしゃるかもしれません</p>
+  </div>
+
+  <div class="fade-in-up fade-delay-1">
+    <%= image_tag("deadfish.png", class: "rounded-xl w-80 h-60 object-cover") %>
+  </div>
+</div>
+
+<div class="flex justify-center px-16 gap-30">
+  <div class="fade-in-up fade-delay-2">
+    <%= image_tag("bait.png", class: "rounded-xl w-80 h-60 object-cover") %>
+  </div>
+
+  <div class="text-lg font-bold justify-center mt-6 fade-in-up fade-delay-3">
+    <p>このように大量のサビキで汚してそのままにしていたり</p>
+    <p>餌をそのまま釣り場に放置しているのをみかけるのも</p>
+    <p>少なくありません</p>
+  </div>
+</div>
+<div class="flex justify-center mt-10 flex-col items-center">
+  <div class="text-5xl cherry-bomb-one-regular bg-blue-200 px-6 py-3 rounded inline-block text-center">
+    そこで！！！！
+  </div>
+  <div class="w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-blue-200"></div>
+</div>
+
+<div class="flex flex-col items-center text-center mt-12 space-y-6">
+  <div class="text-3xl font-extrabold tracking-tight leading-snug max-w-xl text-gray-800">
+    お持ちの釣り餌・釣れた魚で<br>
+    持ち帰らないなというもの、<br>
+    ぜひ釣り人同士で交換してください！
+  </div>
+
+  <a href="<%= posts_path %>" class="inline-block px-8 py-4 bg-blue-600 text-white text-lg font-semibold rounded-full shadow-lg hover:bg-blue-700 transition duration-300 ease-in-out">
+    今すぐはじめる
+  </a>
+</div>

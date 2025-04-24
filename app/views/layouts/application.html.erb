@@ -10,13 +10,15 @@
   <script async defer
   src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>&callback=initMap">
 </script>
-  
+  <!-- ✅ フォントの読み込み -->
+<link href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Lobster&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Water+Brush&display=swap" rel="stylesheet">
+
   <!-- Tailwind CSS を読み込む -->
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload"%>
   <%= javascript_importmap_tags %>
 </head>
 <body class="bg-gray-100">
-<header class="bg-blue-500 text-white p-4 flex justify-between items-center w-full">
+<header class="bg-blue-300 text-white p-4 flex justify-between items-center w-full">
   <%= link_to root_path do %>
     <%= image_tag "logo.svg", alt: "ロゴ", class: "h-12" %>
   <% end %>
