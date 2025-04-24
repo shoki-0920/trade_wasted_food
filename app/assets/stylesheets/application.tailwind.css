@@ -1,1 +1,34 @@
 @import "tailwindcss";
+
+@layer utilities {
+  .font-lobster {
+    font-family: 'Lobster', cursive;
+  }
+
+  .font-water {
+    font-family: 'Water Brush', cursive;
+  }
+  .cherry-bomb-one-regular {
+    font-family: "Cherry Bomb One", system-ui;
+  }
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .fade-in-up {
+    opacity: 0;
+    animation: fade-in-up 1s ease-out forwards;
+  }
+
+  .fade-delay-0 { animation-delay: 0s; }
+  .fade-delay-1 { animation-delay: 0.5s; }
+  .fade-delay-2 { animation-delay: 1s; }
+  .fade-delay-3 { animation-delay: 1.5s; }
+}

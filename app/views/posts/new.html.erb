@@ -1,9 +1,9 @@
-<h1>新しい投稿</h1>
+<h1 class="text-3xl font-bold text-center text-blue-600 mb-6">新しい投稿</h1>
 
-<%= form_with model: @post, local: true do |form| %>
+<%= form_with model: @post, local: true, class: "max-w-xl mx-auto bg-white p-6 rounded-xl shadow-lg" do |form| %>
   <% if @post.errors.any? %>
-    <div class="errors">
-      <h2>エラーが発生しました</h2>
+    <div class="bg-red-100 text-red-700 p-4 rounded-lg mb-6">
+      <h2 class="font-semibold">エラーが発生しました</h2>
       <ul>
         <% @post.errors.full_messages.each do |message| %>
           <li><%= message %></li>
@@ -12,31 +12,32 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :title, "タイトル" %>
-    <%= form.text_field :title %>
+  <div class="mb-4">
+    <%= form.label :title, "タイトル", class: "text-lg text-blue-600" %>
+    <%= form.text_field :title, class: "w-full p-3 border border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" %>
   </div>
 
-  <div class="field">
-    <%= form.label :description, "説明" %>
-    <%= form.text_area :description %>
-  </div>
-  <div class="field">
-    <%= form.label :fishing_spot_id, "釣り場" %>
-    <%= form.collection_select :fishing_spot_id, FishingSpot.all, :id, :name, prompt: "選択してください" %>
+  <div class="mb-4">
+    <%= form.label :description, "説明", class: "text-lg text-blue-600" %>
+    <%= form.text_area :description, class: "w-full p-3 border border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" %>
   </div>
 
-  <div class="field">
-    <%= form.label :price, "価格" %>
-    <%= form.number_field :price %>
+  <div class="mb-4">
+    <%= form.label :fishing_spot_id, "釣り場", class: "text-lg text-blue-600" %>
+    <%= form.collection_select :fishing_spot_id, FishingSpot.all, :id, :name, { prompt: "選択してください" }, class: "w-full p-3 border border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" %>
   </div>
 
-  <div class="field">
-    <%= form.label :image, "画像" %>
-    <%= form.file_field :image %>
+  <div class="mb-4">
+    <%= form.label :price, "価格", class: "text-lg text-blue-600" %>
+    <%= form.number_field :price, class: "w-full p-3 border border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" %>
   </div>
 
-  <div class="actions">
-    <%= form.submit "投稿する" %>
+  <div class="mb-4">
+    <%= form.label :image, "画像", class: "text-lg text-blue-600" %>
+    <%= form.file_field :image, class: "w-full p-3 border border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.submit "投稿する", class: "w-full py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-300" %>
   </div>
 <% end %>
