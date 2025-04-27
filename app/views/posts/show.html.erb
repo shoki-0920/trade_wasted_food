@@ -16,27 +16,31 @@
       <%= number_to_currency(@post.price, unit: "¥") %>
     </div>
 
-    <% if current_user != @post.user %>
-      <% existing_request = ChatRequest.find_by(post_id: @post.id, requester_id: current_user.id, receiver_id: @post.user.id) %>
+  <% if current_user.present? %>
+  <% if current_user != @post.user %>
+    <% existing_request = ChatRequest.find_by(post_id: @post.id, requester_id: current_user.id, receiver_id: @post.user.id) %>
 
-      <% if existing_request&.status == 'pending' %>
-        <div class="text-yellow-500 font-medium">申請中です</div>
-      <% else %>
-        <%= button_to 'チャット申請', chat_requests_path(chat_request: { post_id: @post.id, receiver_id: @post.user.id }), method: :post, class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" %>
-      <% end %>
+    <% if existing_request&.status == 'pending' %>
+      <div class="text-yellow-500 font-medium">申請中です</div>
     <% else %>
-      <% @post.chat_requests.pending.each do |chat_request| %>
-        <div class="flex space-x-2">
-          <%= button_to '承認', approve_chat_request_path(chat_request), method: :post, class: "bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" %>
-          <%= button_to '拒否', reject_chat_request_path(chat_request), method: :post, class: "bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600" %>
-        </div>
-      <% end %>
+      <%= button_to 'チャット申請', chat_requests_path(chat_request: { post_id: @post.id, receiver_id: @post.user.id }), method: :post, class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" %>
     <% end %>
+  <% else %>
+    <% @post.chat_requests.pending.each do |chat_request| %>
+      <div class="flex space-x-2">
+        <%= button_to '承認', approve_chat_request_path(chat_request), method: :post, class: "bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" %>
+        <%= button_to '拒否', reject_chat_request_path(chat_request), method: :post, class: "bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600" %>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>
 
-    <div class="flex space-x-4 mt-4">
-      <%= link_to '編集', edit_post_path(@post), class: "bg-gray-200 text-gray-800 px-4 py-2 rounded hover:bg-gray-300" %>
-      <%= link_to '削除', post_path(@post), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600" %>
-    </div>
+  <% if current_user.present? && current_user == @post.user %>
+  <div class="flex space-x-4 mt-4">
+    <%= link_to '編集', edit_post_path(@post), class: "bg-gray-200 text-gray-800 px-4 py-2 rounded hover:bg-gray-300" %>
+    <%= link_to '削除', post_path(@post), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600" %>
+  </div>
+  <% end %>
 
     <!-- 投稿者情報 -->
     <div class="flex items-center space-x-3 mt-6">
