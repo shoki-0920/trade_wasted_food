@@ -20,6 +20,7 @@ services:
     environment:
       DATABASE_URL: ${DATABASE_URL}
       REDIS_URL: ${REDIS_URL}
+      UPSTASH_REDIS_URL: ${UPSTASH_REDIS_URL}
       RAILS_SERVE_STATIC_FILES: "true"
       RAILS_ENV: "development"
     ports:

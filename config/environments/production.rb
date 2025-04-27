@@ -84,6 +84,15 @@ Rails.application.configure do
     config.hosts << IPAddr.new("0.0.0.0/0")
     config.hosts << IPAddr.new("::/0")
 
+    config.hosts << "baitrade.com"
+    config.hosts << "www.baitrade.com"
+    Rails.application.routes.default_url_options[:host] = "baitrade.com"
+
+    config.assets.compile = false
+    config.assets.digest = true
+    config.assets.precompile += %w[ application.js application.css ]
+    config.public_file_server.enabled = ENV["RAILS_SERVE_STATIC_FILES"].present?
+
   #
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
