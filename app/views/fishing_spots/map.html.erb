@@ -1,13 +1,18 @@
-<h1 class="text-xl font-bold mb-4">釣り場マップ</h1>
+<h1 class="text-3xl font-bold mb-4 text-center text-blue-600">釣り場マップ</h1>
+
+<p class="text-center text-lg text-gray-600 mb-6">
+  マップ上の釣り場をクリックして、その釣り場の投稿を確認しよう！
+</p>
 
 <div id="map" class="w-full h-[500px] rounded-xl shadow-lg"></div>
 
 <script>
-  const fishingSpots = <%= raw(@fishing_spots.to_json(only: [:id, :name, :latitude, :longitude])) %>;
+  // window.initMapを先に定義しておく！
+  window.initMap = function() {
+    const fishingSpots = <%= raw(@fishing_spots.to_json(only: [:id, :name, :latitude, :longitude])) %>;
 
-  function initMap() {
     const map = new google.maps.Map(document.getElementById("map"), {
-      center: { lat: 34.6937, lng: 135.5023 }, // 大阪あたりに中心
+      center: { lat: 34.6937, lng: 135.5023 },
       zoom: 10,
     });
 
@@ -22,5 +27,8 @@
         window.location.href = `/fishing_spots/${spot.id}/posts`;
       });
     });
-  }
+  };
 </script>
+
+<!-- Google Maps APIを async defer で読み込む -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBs4aNPE-HRbddakAwRI7eorekWCfxkjI0&callback=initMap" async defer></script>

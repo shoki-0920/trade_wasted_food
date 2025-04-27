@@ -14,26 +14,30 @@ class Auth0Controller < ApplicationController
 
     # ユーザーを検索 or 作成
     user = User.find_or_initialize_by(uid: uid, provider: provider)
-    user.update!(
-      email: email,
-      name: name,
-      avatar: avatar
-    )
+
+    if user.new_record?
+      # 初回ログイン時のみ、name・avatarも保存
+      user.name = name
+      user.avatar = avatar
+      user.sign_in_count = 1
+      flash[:notice] = "初回ログインです。プロフィールを登録してください。"
+      redirect_path = edit_profile_path
+    else
+      user.increment!(:sign_in_count)
+      flash[:notice] = "ログインしました。"
+      redirect_path = posts_path
+    end
+
+    # 毎回更新してよい情報だけ更新
+    user.email = email
+    user.save!
 
     # ユーザーをセッションに保存
     session[:user_id] = user.id
 
-    # 初回ログインならプロフィール登録へ、それ以降はダッシュボードへ
-    if user.sign_in_count.nil? || user.sign_in_count == 0
-      user.update(sign_in_count: 1)  # 初回ログイン時にカウントをセット
-      flash[:notice] = "初回ログインです。プロフィールを登録してください。"
-      redirect_to edit_profile_path
-    else
-      user.increment!(:sign_in_count)  # 2回目以降のログイン時にカウントを増やす
-      flash[:notice] = "ログインしました。"
-      redirect_to posts_path
-    end
+    redirect_to redirect_path
   end
+
 
   def failure
     # 認証に失敗した場合のエラーメッセージを取得

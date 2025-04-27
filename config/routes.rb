@@ -7,8 +7,12 @@ Rails.application.routes.draw do
   get "health" => "health#show"
 
 
-  resources :users, only: [ :edit, :update ]
-  resource :profile, only: [ :edit, :update ]  # プロフィール編集ページ
+  resources :users, only: [ :edit, :update ] do
+    member do
+      get :profile, to: "profiles#show", as: :profile
+    end
+  end
+  resource :profile, only: [ :edit, :update, :show ]  # プロフィール編集ページ
   resources :posts, only: [ :index, :new, :create, :show, :edit, :update, :destroy ] # 投稿管理
 
   get "fishing_spots/map", to: "fishing_spots#map"

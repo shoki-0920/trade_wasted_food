@@ -1,20 +1,31 @@
 class ProfilesController < ApplicationController
-  before_action :set_user
+  before_action :ensure_logged_in
 
   def edit
+    @user = current_user
   end
 
   def update
+    @user = current_user
     if @user.update(user_params)
-      flash[:notice] = "プロフィールを更新しました！"
-      redirect_to posts_path  # 更新後のリダイレクト先（適宜変更）
+      redirect_to posts_path, notice: "プロフィールを更新しました！"
     else
-      flash.now[:alert] = "プロフィールの更新に失敗しました。"
-      render :edit, status: :unprocessable_entity
+      render :edit, alert: "更新に失敗しました"
     end
   end
 
+  def show
+    @user = User.find(params[:id])
+  end
+
   private
+
+  def ensure_logged_in
+    unless current_user
+      flash[:alert] = "ログインしてください"
+      redirect_to root_path
+    end
+  end
 
   def set_user
     @user = current_user

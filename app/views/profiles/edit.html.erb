@@ -1,27 +1,27 @@
-<h1>プロフィール編集</h1>
+<h1 class="text-3xl font-bold text-center text-blue-600 mb-6">プロフィール編集</h1>
 
-<%= form_with model: @user, url: profile_path, method: :patch do |f| %>
-  <div>
-    <%= f.label :name, "名前" %>
-    <%= f.text_field :name %>
+<%= form_with model: @user, url: profile_path, method: :patch, local: true, scope: :user, class: "max-w-xl mx-auto bg-white p-6 rounded-xl shadow-lg" do |f| %>
+    <%= f.label :name, "ニックネーム", class: "text-lg text-blue-600" %>
+    <%= f.text_field :name, class: "w-full p-3 border border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" %>
   </div>
 
-  <div>
-    <%= f.label :bio, "自己紹介" %>
-    <%= f.text_area :bio %>
+  <div class="mb-4">
+    <%= f.label :bio, "自己紹介", class: "text-lg text-blue-600" %>
+    <%= f.text_area :bio, class: "w-full p-3 border border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" %>
   </div>
 
-  <div>
-    <%= f.label :location, "所在地" %>
-    <%= f.text_field :location %>
+  <div class="mb-4">
+    <%= f.label :location, "あなたのお気に入り釣り場、釣りスタイル", class: "text-lg text-blue-600" %>
+    <%= f.text_field :location, class: "w-full p-3 border border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" %>
   </div>
 
-  <div>
-    <%= f.label :avatar, "アバター画像URL" %>
-    <%= f.text_field :avatar %>
+  <div class="mb-4">
+    <%= f.label :avatar, "プロフィール画像", class: "text-lg text-blue-600" %>
+    <%= f.file_field :avatar, class: "w-full p-3 border border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" %>
   </div>
 
-  <div>
-    <%= f.submit "更新" %>
+
+  <div class="mb-4">
+    <%= f.submit "更新", class: "w-full py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-300" %>
   </div>
 <% end %>

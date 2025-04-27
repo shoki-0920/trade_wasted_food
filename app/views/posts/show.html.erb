@@ -1,42 +1,49 @@
-<h1 class="text-2xl font-bold mb-4"><%= @post.title %></h1>
+<div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden mt-8 p-6 flex flex-col md:flex-row space-y-6 md:space-y-0 md:space-x-6">
+  <!-- 左側: 画像 -->
+  <% if @post.image.attached? %>
+    <div class="md:w-1/2 w-full">
+      <%= image_tag @post.image, class: "w-full h-full object-cover rounded-lg" %>
+    </div>
+  <% end %>
 
-<div class="mb-4">
-  <strong>説明:</strong>
-  <p><%= @post.description %></p>
-</div>
+  <!-- 右側: 情報 -->
+  <div class="md:w-1/2 w-full space-y-4">
+    <h1 class="text-2xl font-bold text-gray-800"><%= @post.title %></h1>
 
-<div class="p-4 mb-4 rounded-lg bg-green-300 text-white">
-  これは赤ですか？
-</div>
-<div class="mb-4">
-  <strong>価格:</strong>
-  <p><%= number_to_currency(@post.price, unit: "¥") %></p>
-</div>
+    <p class="text-gray-700"><%= @post.description %></p>
 
-<% if @post.image.attached? %>
-  <div class="mb-4">
-    <strong>画像:</strong><br>
-    <%= image_tag @post.image, class: "max-w-sm rounded-lg shadow" %>
+    <div class="text-lg font-semibold text-red-500">
+      <%= number_to_currency(@post.price, unit: "¥") %>
+    </div>
+
+    <% if current_user != @post.user %>
+      <% existing_request = ChatRequest.find_by(post_id: @post.id, requester_id: current_user.id, receiver_id: @post.user.id) %>
+
+      <% if existing_request&.status == 'pending' %>
+        <div class="text-yellow-500 font-medium">申請中です</div>
+      <% else %>
+        <%= button_to 'チャット申請', chat_requests_path(chat_request: { post_id: @post.id, receiver_id: @post.user.id }), method: :post, class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" %>
+      <% end %>
+    <% else %>
+      <% @post.chat_requests.pending.each do |chat_request| %>
+        <div class="flex space-x-2">
+          <%= button_to '承認', approve_chat_request_path(chat_request), method: :post, class: "bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" %>
+          <%= button_to '拒否', reject_chat_request_path(chat_request), method: :post, class: "bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600" %>
+        </div>
+      <% end %>
+    <% end %>
+
+    <div class="flex space-x-4 mt-4">
+      <%= link_to '編集', edit_post_path(@post), class: "bg-gray-200 text-gray-800 px-4 py-2 rounded hover:bg-gray-300" %>
+      <%= link_to '削除', post_path(@post), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600" %>
+    </div>
+
+    <!-- 投稿者情報 -->
+    <div class="flex items-center space-x-3 mt-6">
+      <%= link_to profile_user_path(@post.user), class: "flex items-center space-x-3 hover:underline" do %>
+      <%= image_tag(@post.user.avatar || 'default-avatar.png', alt: "Avatar", class: "w-10 h-10 rounded-full object-cover") %>
+      <span class="text-gray-700 font-medium"><%= @post.user.name %></span>
+      <% end %>
+    </div>
   </div>
-<% end %>
-
-<% if current_user != @post.user %>
-  <% existing_request = ChatRequest.find_by(post_id: @post.id, requester_id: current_user.id, receiver_id: @post.user.id) %>
-
-  <% if existing_request&.status == 'pending' %>
-    <div class="text-yellow-500">申請中です</div>
-  <% else %>
-    <%= button_to 'チャット申請', chat_requests_path(chat_request: { post_id: @post.id, receiver_id: @post.user.id }), method: :post %>
-  <% end %>
-<% else %>
-  <!-- 投稿主の場合 -->
-  <% @post.chat_requests.pending.each do |chat_request| %>
-    <%= button_to '承認', approve_chat_request_path(chat_request), method: :post %>
-    <%= button_to '拒否', reject_chat_request_path(chat_request), method: :post %>
-  <% end %>
-<% end %>
-
-
-<div class="mt-6 flex space-x-4">
-  <%= link_to '編集', edit_post_path(@post), class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" %>
-  <%= link_to '削除', post_path(@post), method: :delete, class: "bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600" %></div>
+</div>

@@ -33,7 +33,7 @@
       <%= link_to 'プロフィール編集', edit_profile_path %>
       <%= button_to 'Logout', '/auth/logout', method: :get, class: "bg-white text-blue-500 font-semibold py-2 px-6 rounded-full shadow-md border border-gray-300 hover:bg-gray-100 transition" %>
     <% else %>
-      <%= button_to 'Login', '/auth/auth0', method: :post, authenticity_token: true, class: "bg-white text-blue-500 font-semibold py-2 px-6 rounded-full shadow-md border border-gray-300 hover:bg-gray-100 transition" %>
+      <%= button_to '新規登録/Login', '/auth/auth0', method: :post, authenticity_token: true, class: "bg-white text-blue-500 font-semibold py-2 px-6 rounded-full shadow-md border border-gray-300 hover:bg-gray-100 transition" %>
     <% end %>
   </div>
 </header>
