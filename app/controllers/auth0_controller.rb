@@ -2,19 +2,19 @@ class Auth0Controller < ApplicationController
   def callback
     # OmniAuthから返される認証情報を取得
     auth_info = request.env["omniauth.auth"]
-  
+
     # raw_infoをセッションに保存
     session[:userinfo] = auth_info["extra"]["raw_info"]
-  
+
     uid = auth_info["uid"]
     provider = auth_info["provider"]
     email = auth_info["info"]["email"]
     name = auth_info["info"]["name"]
     avatar = auth_info["info"]["image"]
-  
+
     # ユーザーを検索 or 作成
     user = User.find_or_initialize_by(uid: uid, provider: provider)
-  
+
     if user.new_record?
       # 初回ログイン時のみ、name・avatarも保存
       user.name = name
@@ -27,17 +27,17 @@ class Auth0Controller < ApplicationController
       flash[:notice] = "ログインしました。"
       redirect_path = posts_path
     end
-  
+
     # 毎回更新してよい情報だけ更新
     user.email = email
     user.save!
-  
+
     # ユーザーをセッションに保存
     session[:user_id] = user.id
-  
+
     redirect_to redirect_path
   end
-  
+
 
   def failure
     # 認証に失敗した場合のエラーメッセージを取得

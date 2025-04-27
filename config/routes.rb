@@ -7,9 +7,9 @@ Rails.application.routes.draw do
   get "health" => "health#show"
 
 
-  resources :users, only: [:edit, :update] do
+  resources :users, only: [ :edit, :update ] do
     member do
-      get :profile, to: 'profiles#show', as: :profile
+      get :profile, to: "profiles#show", as: :profile
     end
   end
   resource :profile, only: [ :edit, :update, :show ]  # プロフィール編集ページ
