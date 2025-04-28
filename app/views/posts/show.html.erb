@@ -45,7 +45,7 @@
     <!-- 投稿者情報 -->
     <div class="flex items-center space-x-3 mt-6">
       <%= link_to profile_user_path(@post.user), class: "flex items-center space-x-3 hover:underline" do %>
-      <%= image_tag(@post.user.avatar || 'default-avatar.png', alt: "Avatar", class: "w-10 h-10 rounded-full object-cover") %>
+      <%= image_tag(@post.user.avatar.present? ? @post.user.avatar : 'logo.svg', alt: "Avatar", class: "w-10 h-10 rounded-full object-cover") %>
       <span class="text-gray-700 font-medium"><%= @post.user.name %></span>
       <% end %>
     </div>
