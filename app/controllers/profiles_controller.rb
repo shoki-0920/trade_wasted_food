@@ -10,6 +10,8 @@ class ProfilesController < ApplicationController
     if @user.update(user_params)
       redirect_to posts_path, notice: "プロフィールを更新しました！"
     else
+      # エラーメッセージをログに出力する
+      Rails.logger.error "更新エラー: #{@user.errors.full_messages.join(', ')}"
       render :edit, alert: "更新に失敗しました"
     end
   end

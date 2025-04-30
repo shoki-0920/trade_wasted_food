@@ -1,28 +1,38 @@
 <h1 class="text-3xl font-bold text-center mb-6">チャット一覧</h1>
+<div class="text-2xl font-bold text-center mb-10">※同じ方とのチャットルームは一つまでです</div>
 
 <ul class="space-y-4">
   <% @chat_rooms.each do |room| %>
     <% other_user = room.user1 == current_user ? room.user2 : room.user1 %>
-    <li class="flex items-center p-4 bg-white rounded-lg shadow-md hover:bg-gray-50 transition duration-300">
-      <!-- アイコン・相手の名前 -->
-      <div class="flex-shrink-0 mr-4">
-        <!-- avatar属性を直接使用 -->
-        <%= image_tag(other_user.avatar || 'default-avatar.png', alt: "Avatar", class: "w-12 h-12 rounded-full object-cover") %>
-      </div>
 
-      <!-- チャットの内容・最新メッセージ -->
+    <li class="flex items-center p-4 bg-white rounded-lg shadow-md hover:bg-gray-50 transition duration-300">
+      
+      <!-- アイコン（画像リンク） -->
+      <%= link_to profile_user_path(other_user), class: "flex-shrink-0 mr-4" do %>
+        <% if other_user&.avatar&.attached? %>
+          <%= image_tag other_user.avatar.variant(resize_to_fill: [48, 48]), alt: "Avatar", class: "w-12 h-12 rounded-full object-cover" %>
+        <% else %>
+          <%= image_tag 'default_user.png', alt: "Avatar", class: "w-12 h-12 rounded-full object-cover" %>
+        <% end %>
+      <% end %>
+
+      <!-- チャット内容・名前 -->
       <div class="flex-1">
-        <p class="font-semibold text-lg text-blue-600"><%= other_user.name %></p>
+        <%= link_to profile_user_path(other_user), class: "block" do %>
+          <p class="font-semibold text-lg text-blue-600 hover:underline"><%= other_user.name %></p>
+        <% end %>
+
         <p class="text-gray-600 text-sm truncate">
-          <%= room.messages.last ? room.messages.last.content : "メッセージはまだありません" %>
+          <%= room.messages.last&.content || "メッセージはまだありません" %>
         </p>
       </div>
 
-      <!-- チャットリンクと削除ボタン -->
+      <!-- チャットへ・削除ボタン -->
       <div class="flex items-center space-x-2">
         <%= link_to "チャットへ", chat_room_path(room), class: "text-blue-500 hover:text-blue-700 font-medium" %>
         <%= button_to "削除", chat_room_path(room), method: :delete, data: { confirm: "このチャットを削除しますか？" }, class: "text-red-500 hover:text-red-700 font-medium" %>
       </div>
+
     </li>
   <% end %>
 </ul>

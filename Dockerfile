@@ -13,10 +13,11 @@ RUN apt-get update -qq && apt-get install -y \
   pkg-config \
   python-is-python3 \
   libjemalloc2 \
+  libvips42 \
   && curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
   && apt-get install -y nodejs \
   && npm install -g yarn \
-  && rm -rf /var/lib/apt/lists/*  # キャッシュ削除
+  && rm -rf /var/lib/apt/lists/*
 
 # 作業ディレクトリを作成
 WORKDIR /app

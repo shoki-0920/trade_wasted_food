@@ -1,16 +1,25 @@
 <h1 class="text-3xl font-bold mb-6 text-center">プロフィール</h1>
 
 <div class="max-w-xl mx-auto bg-white p-6 rounded-xl shadow-lg">
-  <div class="flex items-center mb-4">
-    <%= image_tag(@user.avatar || 'default-avatar.png', alt: "Avatar", class: "w-24 h-24 rounded-full object-cover mr-4") %>
-    <div>
-      <h2 class="text-2xl font-semibold text-gray-800"><%= @user.name %></h2>
-      <p class="text-gray-600"><%= @user.bio %></p>
-    </div>
-  </div>
+  <div class="flex items-center space-x-3 mb-6">
+  <%= link_to profile_user_path(@user), class: "flex items-center space-x-3 hover:underline" do %>
+    <% if @user.avatar.attached? %>
+      <%= image_tag @user.avatar.variant(resize_to_fill: [40, 40]), alt: "Avatar", class: "w-24 h-24 rounded-full object-cover" %>
+    <% else %>
+      <%= image_tag 'default_user.png', alt: "Avatar", class: "w-24 h-24 rounded-full object-cover" %>
+    <% end %>
+
+    <span class="text-gray-800 font-medium text-xl"><%= @user.name %></span>
+  <% end %>
+</div>
 
   <div class="mt-6">
     <h3 class="text-xl font-semibold text-blue-600">釣りスタイル / お気に入り釣り場</h3>
     <p class="text-gray-600"><%= @user.location %></p>
+  </div>
+
+  <div class="mt-6">
+    <h3 class="text-xl font-semibold text-blue-600">自己紹介</h3>
+    <p class="text-gray-600"><%= @user.bio %></p>
   </div>
 </div>

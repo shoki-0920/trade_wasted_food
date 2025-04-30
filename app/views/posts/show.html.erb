@@ -13,7 +13,7 @@
     <p class="text-gray-700"><%= @post.description %></p>
 
     <div class="text-lg font-semibold text-red-500">
-      <%= number_to_currency(@post.price, unit: "¥") %>
+      <%= number_with_delimiter(@post.price) %>円
     </div>
 
   <% if current_user.present? %>
@@ -38,16 +38,23 @@
   <% if current_user.present? && current_user == @post.user %>
   <div class="flex space-x-4 mt-4">
     <%= link_to '編集', edit_post_path(@post), class: "bg-gray-200 text-gray-800 px-4 py-2 rounded hover:bg-gray-300" %>
-    <%= link_to '削除', post_path(@post), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600" %>
+    <%= button_to '削除', post_path(@post), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600" %>
   </div>
   <% end %>
 
     <!-- 投稿者情報 -->
-    <div class="flex items-center space-x-3 mt-6">
-      <%= link_to profile_user_path(@post.user), class: "flex items-center space-x-3 hover:underline" do %>
-      <%= image_tag(@post.user.avatar.present? ? @post.user.avatar : 'logo.svg', alt: "Avatar", class: "w-10 h-10 rounded-full object-cover") %>
-      <span class="text-gray-700 font-medium"><%= @post.user.name %></span>
-      <% end %>
-    </div>
+  <div class="flex items-center space-x-3 mt-6">
+  <%= link_to profile_user_path(@post.user), class: "flex items-center space-x-3 hover:underline" do %>
+    <% if @post.user.avatar.attached? %>
+      <%= image_tag @post.user.avatar.variant(resize_to_fill: [40, 40]), alt: "Avatar", class: "w-10 h-10 rounded-full object-cover" %>
+    <% else %>
+      <%= image_tag 'default_user.png', alt: "Avatar", class: "w-10 h-10 rounded-full object-cover" %>
+    <% end %>
+
+    <span class="text-gray-700 font-medium"><%= @post.user.name %></span>
+  <% end %>
+</div>
+
+
   </div>
 </div>

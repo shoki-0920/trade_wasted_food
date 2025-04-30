@@ -6,7 +6,7 @@ Bundler.require(*Rails.groups)
 module TradeWastedFood
   class Application < Rails::Application
     config.load_defaults 7.1
-
+    config.i18n.default_locale = :ja
     # APIモードを無効にして、フルスタックモードにする
     config.api_only = false
 

@@ -1,6 +1,8 @@
 <h1 class="text-3xl font-bold text-center text-blue-600 mb-6">プロフィール編集</h1>
 
-<%= form_with model: @user, url: profile_path, method: :patch, local: true, scope: :user, class: "max-w-xl mx-auto bg-white p-6 rounded-xl shadow-lg" do |f| %>
+<%= form_with model: @user, url: profile_path, method: :patch, local: true, scope: :user, multipart: true, class: "max-w-xl mx-auto bg-white p-6 rounded-xl shadow-lg" do |f| %>
+  
+  <div class="mb-4">
     <%= f.label :name, "ニックネーム", class: "text-lg text-blue-600" %>
     <%= f.text_field :name, class: "w-full p-3 border border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" %>
   </div>
@@ -17,9 +19,15 @@
 
   <div class="mb-4">
     <%= f.label :avatar, "プロフィール画像", class: "text-lg text-blue-600" %>
+
+    <% if @user.avatar.attached? %>
+      <div class="flex justify-center mb-4">
+        <%= image_tag url_for(@user.avatar), alt: "現在のプロフィール画像", class: "w-24 h-24 md:w-32 md:h-32 lg:w-40 lg:h-40 rounded-full object-cover" %>
+      </div>
+    <% end %>
+
     <%= f.file_field :avatar, class: "w-full p-3 border border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" %>
   </div>
-
 
   <div class="mb-4">
     <%= f.submit "更新", class: "w-full py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-300" %>

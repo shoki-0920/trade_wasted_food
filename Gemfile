@@ -37,6 +37,8 @@ gem "thruster", require: false
 gem "redis", "~> 4.0"
 gem "redis-rails"
 
+gem "rails-i18n"
+
 gem "importmap-rails"
 gem "cssbundling-rails"
 gem "propshaft"
@@ -45,7 +47,7 @@ gem "omniauth-rails_csrf_protection", "~> 1.0" # prevents forged authentication 
 
 gem "hotwire-rails"
 
-
+gem "image_processing", "~> 1.2"
 gem "aws-sdk-s3", require: false
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

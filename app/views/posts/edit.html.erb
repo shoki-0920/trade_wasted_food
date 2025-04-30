@@ -1,5 +1,6 @@
 <h1 class="text-2xl font-bold mb-4">投稿の編集</h1>
 
+<div class="max-w-xl mx-auto">
 <%= form_with(model: @post, local: true, html: { class: "space-y-4" }) do |form| %>
   <div>
     <%= form.label :title, "タイトル", class: "block font-medium text-gray-700" %>
@@ -31,3 +32,4 @@
     <%= link_to "戻る", post_path(@post), class: "bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400" %>
   </div>
 <% end %>
+</div>
