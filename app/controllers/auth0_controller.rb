@@ -1,42 +1,53 @@
 class Auth0Controller < ApplicationController
   def callback
-    # OmniAuthから返される認証情報を取得
-    auth_info = request.env["omniauth.auth"]
+  auth_info = request.env["omniauth.auth"]
 
-    # raw_infoをセッションに保存
-    session[:userinfo] = auth_info["extra"]["raw_info"]
+  # raw_infoをセッションに保存
+  session[:userinfo] = auth_info["extra"]["raw_info"]
 
-    uid = auth_info["uid"]
-    provider = auth_info["provider"]
-    email = auth_info["info"]["email"]
-    name = auth_info["info"]["name"]
-    avatar = auth_info["info"]["image"]
+  uid      = auth_info["uid"]
+  provider = auth_info["provider"]
+  email    = auth_info["info"]["email"]
+  name     = auth_info["info"]["name"]
+  avatar   = auth_info["info"]["image"]
 
-    # ユーザーを検索 or 作成
-    user = User.find_or_initialize_by(uid: uid, provider: provider)
+  # ユーザーを検索 or 作成
+  user = User.find_or_initialize_by(uid: uid, provider: provider)
 
-    if user.new_record?
-      # 初回ログイン時のみ、name・avatarも保存
-      user.name = name
-      user.avatar = avatar
-      user.sign_in_count = 1
-      flash[:notice] = "初回ログインです。プロフィールを登録してください。"
-      redirect_path = edit_profile_path
-    else
-      user.increment!(:sign_in_count)
-      flash[:notice] = "ログインしました。"
-      redirect_path = posts_path
-    end
+  if user.new_record?
+    # 初回ログイン時のみ、name・avatarも保存
+    user.name          = name
+    user.email         = email
+    user.sign_in_count = 1
+    user.save!         # ← いったん保存
 
-    # 毎回更新してよい情報だけ更新
-    user.email = email
-    user.save!
-
-    # ユーザーをセッションに保存
-    session[:user_id] = user.id
-
-    redirect_to redirect_path
+    #保存後に ActiveStorage 経由で画像を添付　これをしないとエラー出る
+    default_path = Rails.root.join("app", "assets", "images", "default_user.png")
+      File.open(default_path) do |file|
+        user.avatar.attach(
+          io:           file,
+          filename:     "default_user.png",
+          content_type: "image/png"
+        )
+      end
+    flash[:notice] = "初回ログインです。プロフィールを登録してください。"
+    redirect_path = edit_profile_path
+  else
+    user.increment!(:sign_in_count)
+    flash[:notice] = "ログインしました。"
+    redirect_path = posts_path
   end
+
+  # 毎回更新してよい情報だけ更新
+  user.email = email
+  user.save!
+
+  # ユーザーをセッションに保存
+  session[:user_id] = user.id
+
+  redirect_to redirect_path
+  end
+
 
 
   def failure
