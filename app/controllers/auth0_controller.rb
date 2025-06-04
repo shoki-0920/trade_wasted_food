@@ -21,7 +21,7 @@ class Auth0Controller < ApplicationController
     user.sign_in_count = 1
     user.save!         # ← いったん保存
 
-    #保存後に ActiveStorage 経由で画像を添付　これをしないとエラー出る
+    # 保存後に ActiveStorage 経由で画像を添付　これをしないとエラー出る
     default_path = Rails.root.join("app", "assets", "images", "default_user.png")
       File.open(default_path) do |file|
         user.avatar.attach(
