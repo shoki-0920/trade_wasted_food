@@ -17,6 +17,8 @@ services:
       - db
     volumes:
       - .:/app  # ソースコードの同期
+    env_file:
+      - .env
     environment:
       DATABASE_URL: ${DATABASE_URL}
       REDIS_URL: ${REDIS_URL}
