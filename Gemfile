@@ -47,6 +47,7 @@ gem "omniauth-rails_csrf_protection", "~> 1.0" # prevents forged authentication 
 
 gem "hotwire-rails"
 
+gem "gretel"
 gem "image_processing", "~> 1.2"
 gem "aws-sdk-s3", require: false
 group :development, :test do

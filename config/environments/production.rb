@@ -80,6 +80,9 @@ Rails.application.configure do
     # 本番ホスト名（.env または fly.toml に設定）
     config.hosts << ENV["APP_HOST"] if ENV["APP_HOST"].present?
 
+
+
+    Rails.application.routes.default_url_options = { host: "trade-wasted-food.fly.dev", protocol: "https" }
     # Fly.io 内部通信対応
     config.hosts << /[a-z0-9]+\.internal/
     config.hosts << IPAddr.new("0.0.0.0/0")
