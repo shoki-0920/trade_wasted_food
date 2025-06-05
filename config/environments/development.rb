@@ -70,7 +70,7 @@ Rails.application.configure do
   # Tailwind CSSをプリコンパイル対象に追加
   # config.assets.precompile += %w[application.css]
 
-   # URL ヘルパー（url_for や *_url）が絶対 URL を返すためのデフォルト host 設定
+  # URL ヘルパー（url_for や *_url）が絶対 URL を返すためのデフォルト host 設定
   config.action_controller.default_url_options = {
     host: "localhost",
     port: 3000
@@ -80,7 +80,7 @@ Rails.application.configure do
   Rails.application.routes.default_url_options[:host] = "localhost"
   Rails.application.routes.default_url_options[:port] = 3000
 
-  
+
   config.assets.digest = false
   config.assets.debug = false
   config.assets.css_compressor = nil

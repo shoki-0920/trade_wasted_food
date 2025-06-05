@@ -69,6 +69,8 @@
 <% end %>
 
   <main class="container mx-auto p-4">
+    <%= breadcrumbs separator: " &rsaquo; " %>
+
     <%= yield %> <!-- ここに個別のビューがレンダリングされます -->
   </main>
 
