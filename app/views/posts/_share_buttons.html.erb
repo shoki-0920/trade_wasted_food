@@ -1,0 +1,25 @@
+<!-- app/views/posts/_share_buttons.html.erb -->
+<div class="flex space-x-4">
+  <%# X（旧Twitter） %>
+  <%= link_to "https://twitter.com/intent/tweet?url=#{ERB::Util.url_encode(request.original_url)}&text=#{ERB::Util.url_encode(@post.title)}",
+          target: "_blank", rel: "noopener" do %>
+    <%= image_tag("x_logo_black.png", alt: "Xでシェア", class: "w-6 h-6") %>
+  <% end %>
+
+  <%# Facebook %>
+  <%= link_to "https://www.facebook.com/sharer/sharer.php?u=#{ERB::Util.url_encode(request.original_url)}",
+          target: "_blank", rel: "noopener" do %>
+    <%= image_tag("facebook_logo.png", alt: "Facebookでシェア", class: "w-6 h-6") %>
+  <% end %>
+
+  <%# LINE %>
+  <%= link_to "https://social-plugins.line.me/lineit/share?url=#{ERB::Util.url_encode(request.original_url)}",
+          target: "_blank", rel: "noopener" do %>
+    <%= image_tag("line_logo.png", alt: "LINEでシェア", class: "w-6 h-6") %>
+  <% end %>
+
+  <%# メール %>
+  <%= mail_to "", subject: @post.title, body: "#{@post.title} をチェック: #{request.original_url}" do %>
+    <%= image_tag("mail_logo.png", alt: "メールでシェア", class: "w-6 h-6") %>
+  <% end %>
+</div>

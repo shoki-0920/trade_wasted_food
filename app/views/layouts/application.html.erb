@@ -6,6 +6,25 @@
   <title>Trade Wasted Food</title>
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
+  <!-- ▼ OGPメタタグ ▼ -->
+<meta property="og:title"       content="<%= @post&.title.presence || 'Trade Wasted Food' %>">
+<meta property="og:description" content="<%= @post&.description.presence || '不要な食品をシェアして無駄をなくすマーケットプレイス' %>">
+<meta property="og:url"         content="<%= request.original_url %>">
+
+<% if @post&.image&.attached? %>
+  <!-- url_for ではなく rails_blob_url を使う -->
+  <meta property="og:image"      content="<%= rails_blob_url(@post.image) %>">
+  <meta name="twitter:image"     content="<%= rails_blob_url(@post.image) %>">
+<% else %>
+  <meta property="og:image"      content="<%= asset_url('default_post.svg') %>">
+  <meta name="twitter:image"     content="<%= asset_url('default_post.svg') %>">
+<% end %>
+
+<meta property="og:type"        content="<%= @post.present? ? 'article' : 'website' %>">
+<meta name="twitter:card"       content="summary_large_image">
+<meta name="twitter:title"      content="<%= @post&.title.presence || 'Trade Wasted Food' %>">
+<meta name="twitter:description"content="<%= @post&.description.presence || '不要な食品をシェアして無駄をなくすマーケットプレイス' %>">
+<!-- ▲ OGPメタタグ ▲ -->
   <%# ブラウザで使うために地図を表示するJavaScriptライブラリ %>
   <script async defer
   src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>&callback=initMap">
