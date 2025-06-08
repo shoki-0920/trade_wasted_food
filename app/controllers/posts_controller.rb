@@ -48,6 +48,10 @@ class PostsController < ApplicationController
     redirect_to posts_path, notice: "投稿を削除しました"
   end
 
+  def bookmarks
+    @posts = current_user.bookmarked_posts
+  end
+
 
 
   private
