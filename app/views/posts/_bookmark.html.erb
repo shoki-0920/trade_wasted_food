@@ -1,0 +1,28 @@
+<%= button_to post_bookmark_path(post),
+              method: :post,
+              id: "bookmark-#{post.id}",
+              class: "inline-block p-1 focus:outline-none bg-transparent border-0",
+              form: { 
+                style: "display: inline;",
+                data: { turbo_stream: true }
+              },
+              remote: true do %>
+
+  <svg xmlns="http://www.w3.org/2000/svg"
+       class="w-6 h-6 text-gray-400 hover:text-gray-600 transition-colors"
+       fill="none"
+       stroke="currentColor"
+       viewBox="0 0 24 24">
+    <path stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 
+             3.966a1 1 0 00.95.69h4.175c.969 0 1.371 
+             1.24.588 1.81l-3.378 2.455a1 1 0 
+             00-.364 1.118l1.287 3.966c.3.921-.755 
+             1.688-1.538 1.118l-3.378-2.455a1 1 0 
+             00-1.176 0L5.042 16.936c-.783.57-1.838-.197-1.538-1.118l1.287-3.966a1 
+             1 0 00-.364-1.118L1.049 9.393c-.783-.57-.38-1.81.588-1.81h4.175a1 
+             1 0 00.95-.69L11.049 2.927z" />
+  </svg>
+<% end %>

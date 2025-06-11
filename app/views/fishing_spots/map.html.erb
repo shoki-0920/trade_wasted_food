@@ -9,28 +9,194 @@
 <div id="map" class="w-full h-[500px] rounded-xl shadow-lg"></div>
 
 <script>
-  // window.initMapを先に定義しておく！
-  window.initMap = function() {
-    const fishingSpots = <%= raw(@fishing_spots.to_json(only: [:id, :name, :latitude, :longitude])) %>;
+  // Google Maps API の重複読み込みを防ぐ
+  if (!window.googleMapsLoaded) {
+    
+    // グローバル変数として fishingSpots を設定
+    window.fishingSpotsData = <%= raw(@fishing_spots.to_json(only: [:id, :name, :latitude, :longitude])) %>;
+    
+    // 釣り場マーカーのコンテンツを作成する関数
+    function createFishingSpotIcon() {
+      return {
+        url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+            <circle cx="20" cy="20" r="18" fill="#ff6b6b" stroke="white" stroke-width="2"/>
+            <text x="20" y="26" text-anchor="middle" font-size="20" fill="white">🎣</text>
+          </svg>
+        `),
+        scaledSize: new google.maps.Size(40, 40),
+        anchor: new google.maps.Point(20, 20)
+      };
+    }
 
-    const map = new google.maps.Map(document.getElementById("map"), {
-      center: { lat: 34.6937, lng: 135.5023 },
-      zoom: 10,
-    });
+    // 現在地マーカーのアイコンを作成する関数
+    function createCurrentLocationIcon() {
+      return {
+        path: google.maps.SymbolPath.CIRCLE,
+        scale: 10,
+        fillColor: '#4285F4',
+        fillOpacity: 1,
+        strokeColor: 'white',
+        strokeWeight: 3
+      };
+    }
 
-    fishingSpots.forEach(spot => {
-      const marker = new google.maps.Marker({
-        position: { lat: spot.latitude, lng: spot.longitude },
-        map: map,
-        title: spot.name,
-      });
+    // メインの初期化関数
+    window.initMap = function() {
+      console.log("✅ initMap 開始");
+      
+      // 重複初期化チェック
+      if (window.mapInstance) {
+        console.log("🔄 マップは既に初期化済みです");
+        return;
+      }
 
-      marker.addListener("click", () => {
-        window.location.href = `/fishing_spots/${spot.id}/posts`;
-      });
-    });
-  };
+      const mapElement = document.getElementById("map");
+      if (!mapElement) {
+        console.error("❌ #map 要素が見つかりません");
+        return;
+      }
+
+      try {
+        // マップを作成
+        const map = new google.maps.Map(mapElement, {
+          center: { lat: 34.6937, lng: 135.5023 },
+          zoom: 11,
+          mapTypeControl: true,
+          streetViewControl: true,
+          fullscreenControl: true
+        });
+
+        // グローバルにマップインスタンスを保存
+        window.mapInstance = map;
+
+        console.log("✅ マップ作成完了");
+
+        // 釣り場マーカーの追加
+        if (window.fishingSpotsData && window.fishingSpotsData.length > 0) {
+          window.fishingSpotsData.forEach(spot => {
+            const marker = new google.maps.Marker({
+              position: { 
+                lat: parseFloat(spot.latitude), 
+                lng: parseFloat(spot.longitude) 
+              },
+              map: map,
+              title: spot.name,
+              icon: createFishingSpotIcon()
+            });
+
+            marker.addListener("click", () => {
+              window.location.href = `/fishing_spots/${spot.id}/posts`;
+            });
+          });
+          console.log(`✅ ${window.fishingSpotsData.length}個の釣り場マーカーを追加`);
+        }
+
+        // 現在地表示関数
+        const showCurrentLocation = (lat, lng) => {
+          const currentPos = { lat, lng };
+          console.log("🖥️ 現在地を表示:", currentPos);
+
+          // マップの中心を現在地に設定
+          map.setCenter(currentPos);
+          map.setZoom(13);
+
+          // 現在地マーカー
+          const currentLocationMarker = new google.maps.Marker({
+            position: currentPos,
+            map: map,
+            title: "現在地",
+            icon: createCurrentLocationIcon()
+          });
+
+          // 現在地の円
+          const currentLocationCircle = new google.maps.Circle({
+            strokeColor: '#4285F4',
+            strokeOpacity: 0.4,
+            strokeWeight: 2,
+            fillColor: '#4285F4',
+            fillOpacity: 0.15,
+            map: map,
+            center: currentPos,
+            radius: 200
+          });
+
+          console.log("✅ 現在地マーカーと円を追加");
+        };
+
+        // 位置情報の取得
+        if ("geolocation" in navigator) {
+          console.log("✅ 位置情報取得を開始");
+          
+          const options = {
+            enableHighAccuracy: true,
+            timeout: 15000,
+            maximumAge: 300000 // 5分間キャッシュ
+          };
+
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              console.log("✅ 現在地取得成功:", position.coords);
+              showCurrentLocation(position.coords.latitude, position.coords.longitude);
+            },
+            (error) => {
+              console.warn("⚠️ 現在地取得失敗:", error.message);
+              console.log("📍 デフォルト位置（大阪）を表示");
+              // エラー時はデフォルト位置のマーカーは表示しない
+            },
+            options
+          );
+        } else {
+          console.warn("⚠️ geolocation 非対応");
+        }
+
+        console.log("✅ マップ初期化完了");
+
+      } catch (error) {
+        console.error("❌ マップ初期化エラー:", error);
+        window.mapInstance = null;
+      }
+    };
+
+    // Google Maps API 読み込み完了フラグ
+    window.googleMapsLoaded = true;
+  }
+
+  // Turbo でページが変わった時のクリーンアップ
+  document.addEventListener('turbo:before-visit', function() {
+    if (window.mapInstance) {
+      // マップインスタンスをクリア
+      window.mapInstance = null;
+    }
+  });
 </script>
 
-<!-- Google Maps APIを async defer で読み込む -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBs4aNPE-HRbddakAwRI7eorekWCfxkjI0&callback=initMap" async defer></script>
+<!-- Google Maps API を条件付きで読み込み -->
+<% unless Rails.env.test? %>
+  <script>
+    // Google Maps API がまだ読み込まれていない場合のみ読み込む
+    if (typeof google === 'undefined' || !google.maps) {
+      console.log("📡 Google Maps API を読み込み中...");
+      const script = document.createElement('script');
+      script.src = 'https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>&callback=initMap';
+      script.async = true;
+      script.defer = true;
+      
+      script.onload = function() {
+        console.log("✅ Google Maps API 読み込み完了");
+      };
+      
+      script.onerror = function() {
+        console.error("❌ Google Maps API 読み込みエラー");
+      };
+      
+      document.head.appendChild(script);
+    } else {
+      console.log("✅ Google Maps API は既に読み込み済み");
+      // 既に読み込み済みの場合は直接初期化
+      if (typeof window.initMap === 'function') {
+        window.initMap();
+      }
+    }
+  </script>
+<% end %>

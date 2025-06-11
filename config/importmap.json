@@ -1,0 +1,13 @@
+{
+  "imports": {
+    "application": "/assets/application-88ff459d.js",
+    "@rails/ujs": "/assets/@rails--ujs-3724fb28.js",
+    "@hotwired/turbo-rails": "/assets/@hotwired--turbo-rails-f83d8670.js",
+    "@hotwired/turbo": "/assets/@hotwired--turbo-5e47c544.js",
+    "@rails/actioncable/src": "/assets/@rails--actioncable--src-1d29f9bc.js",
+    "@hotwired/stimulus": "/assets/@hotwired--stimulus-745bd373.js",
+    "custom/map": "/assets/custom/map-ec463a82.js",
+    "controllers/hello_controller": "/assets/controllers/hello_controller-81374240.js",
+    "controllers": "/assets/controllers/index-f1c9a5a3.js"
+  }
+}

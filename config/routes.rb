@@ -13,7 +13,15 @@ Rails.application.routes.draw do
     end
   end
   resource :profile, only: [ :edit, :update, :show ]  # プロフィール編集ページ
-  resources :posts, only: [ :index, :new, :create, :show, :edit, :update, :destroy ] # 投稿管理
+  resources :posts, only: %i[index new create show edit update destroy] do
+    resource :bookmark, only: %i[create destroy]
+
+    collection do
+      # GET /posts/bookmarks → posts#bookmarks
+      get :bookmarks
+    end
+  end
+
 
   get "fishing_spots/map", to: "fishing_spots#map"
   resources :fishing_spots, only: [ :index ] do
