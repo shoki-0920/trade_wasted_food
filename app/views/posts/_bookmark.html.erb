@@ -1,8 +1,13 @@
 <%= button_to post_bookmark_path(post),
               method: :post,
-              form:   { onclick: "event.stopPropagation();" },
-              class:  "inline-block p-1 focus:outline-none bg-transparent border-0" do %>
-  <!-- 枠だけ星アイコン（灰色）を inline SVG で描画 -->
+              id: "bookmark-#{post.id}",
+              class: "inline-block p-1 focus:outline-none bg-transparent border-0",
+              form: { 
+                style: "display: inline;",
+                data: { turbo_stream: true }
+              },
+              remote: true do %>
+
   <svg xmlns="http://www.w3.org/2000/svg"
        class="w-6 h-6 text-gray-400 hover:text-gray-600 transition-colors"
        fill="none"

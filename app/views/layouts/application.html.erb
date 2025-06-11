@@ -25,15 +25,10 @@
 <meta name="twitter:title"      content="<%= @post&.title.presence || 'Trade Wasted Food' %>">
 <meta name="twitter:description"content="<%= @post&.description.presence || '不要な食品をシェアして無駄をなくすマーケットプレイス' %>">
 <!-- ▲ OGPメタタグ ▲ -->
-  <%# ブラウザで使うために地図を表示するJavaScriptライブラリ %>
-  <script async defer
-  src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>&callback=initMap">
-</script>
-  <!-- ✅ フォントの読み込み -->
-<link href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Lobster&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Water+Brush&display=swap" rel="stylesheet">
+   <!-- Tailwind CSS -->
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
 
-  <!-- Tailwind CSS を読み込む -->
-  <%= stylesheet_link_tag "application", "data-turbo-track": "reload"%>
+  <!-- Importmap + application.js（map.js を含む）を読み込む -->
   <%= javascript_importmap_tags %>
 </head>
 <body class="bg-gray-100">
@@ -51,9 +46,16 @@
       <%= link_to "チャット一覧", chat_rooms_path %>
       <%= link_to 'プロフィール編集', edit_profile_path %>
       <%= link_to "お気に入り", bookmarks_posts_path, class: 'nav-link' %>
-      <%= button_to 'Logout', '/auth/logout', method: :get, class: "bg-white text-blue-500 font-semibold py-2 px-6 rounded-full shadow-md border border-gray-300 hover:bg-gray-100 transition" %>
-    <% else %>
-      <%= button_to '新規登録/Login', '/auth/auth0', method: :post, authenticity_token: true, class: "bg-white text-blue-500 font-semibold py-2 px-6 rounded-full shadow-md border border-gray-300 hover:bg-gray-100 transition" %>
+      <%= button_to 'Logout', '/auth/logout', 
+              method: :get, 
+              data: { turbo: false },
+              class: "bg-white text-blue-500 font-semibold py-2 px-6 rounded-full shadow-md border border-gray-300 hover:bg-gray-100 transition" %>
+      <% else %>
+      <%= button_to '新規登録/Login', '/auth/auth0', 
+                method: :post, 
+                authenticity_token: true, 
+                data: { turbo: false },
+                class: "bg-white text-blue-500 font-semibold py-2 px-6 rounded-full shadow-md border border-gray-300 hover:bg-gray-100 transition" %>
     <% end %>
   </div>
 </header>

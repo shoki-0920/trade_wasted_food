@@ -10,16 +10,17 @@ class User < ApplicationRecord
 
   # 指定の投稿をブックマークに追加
   def bookmark(post)
-    bookmarked_posts << post
+    return if bookmark?(post) # 既にブックマーク済みなら何もしない
+    bookmarks.create(post: post)
   end
 
   # 指定の投稿のブックマークを解除
   def unbookmark(post)
-    bookmarked_posts.destroy(post)
+    bookmarks.find_by(post: post)&.destroy
   end
 
   # 指定の投稿をすでにブックマークしているか？
   def bookmark?(post)
-    bookmarked_posts.include?(post)
+    bookmarks.exists?(post: post)
   end
 end
