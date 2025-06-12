@@ -1,13 +1,34 @@
 class PostsController < ApplicationController
-  def index
-    if
-      params[:fishing_spot_id].present?
-      @fishing_spot = FishingSpot.find(params[:fishing_spot_id])
-      @posts = @fishing_spot.posts.order(created_at: :desc)
-    else
-      @posts = Post.all.order(created_at: :desc)
-    end
+def index
+  # 基本のクエリを設定（N+1問題対策）
+  @posts = Post.includes(:fishing_spot, :user, image_attachment: :blob)
+
+  # 釣り場での絞り込み
+  if params[:fishing_spot_id].present?
+    @fishing_spot = FishingSpot.find(params[:fishing_spot_id])
+    @posts = @posts.where(fishing_spot_id: params[:fishing_spot_id])
   end
+
+  # キーワード検索
+  if params[:search].present?
+    @posts = @posts.where("title ILIKE ? OR description ILIKE ?",
+                         "%#{params[:search]}%", "%#{params[:search]}%")
+  end
+
+  # 価格帯での絞り込み
+  if params[:price_range].present?
+  min_price, max_price = params[:price_range].split("-").map(&:to_i)
+
+  if max_price > 0
+    @posts = @posts.where(price: min_price..max_price)
+  else
+    @posts = @posts.where("price >= ?", min_price)
+  end
+  end
+
+  # 最終的にソート
+  @posts = @posts.order(created_at: :desc)
+end
 
   def new
     @post = Post.new
