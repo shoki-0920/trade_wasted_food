@@ -1,0 +1,131 @@
+<!-- app/views/posts/preview.turbo_stream.erb -->
+
+<%= turbo_stream.update "preview_container" do %>
+  <div class="mt-8 p-6 bg-blue-50 border-2 border-blue-200 rounded-xl">
+    
+    <!-- プレビューヘッダー -->
+    <div class="flex justify-between items-center mb-4">
+      <h3 class="text-lg font-semibold text-blue-800">
+        📋 投稿プレビュー
+      </h3>
+      <button onclick="document.getElementById('preview_container').innerHTML = ''" 
+              class="text-blue-600 hover:text-blue-800 text-sm">
+        ✕ 閉じる
+      </button>
+    </div>
+
+    <!-- バリデーションエラー表示 -->
+    <% if @post.errors.any? %>
+      <div class="bg-red-50 border border-red-200 text-red-700 px-3 py-2 rounded mb-4">
+        <h4 class="font-bold text-sm">エラーがあります：</h4>
+        <ul class="mt-1 text-sm list-disc list-inside">
+          <% @post.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <!-- プレビューカード（コンパクト版） -->
+    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+      
+      <!-- 画像部分（小さめ） -->
+      <div class="w-full h-32 overflow-hidden">
+        <%
+          # 画像表示の優先順位：
+          # 1. 新しくアップロードされた画像（params経由）
+          # 2. 既存レコードの既存画像
+          # 3. 画像なし
+          
+          new_image_uploaded = params[:post] && params[:post][:image].present?
+          has_existing_image = @post.persisted? && @post.image.attached?
+        %>
+        
+        <% if new_image_uploaded %>
+          <%# 新しい画像がアップロードされた場合（新規・編集共通） %>
+          <%
+            uploaded_file = params[:post][:image]
+            if uploaded_file.respond_to?(:tempfile)
+              begin
+                file_content = File.read(uploaded_file.tempfile.path)
+                base64_image = Base64.strict_encode64(file_content)
+                mime_type = uploaded_file.content_type
+                data_url = "data:#{mime_type};base64,#{base64_image}"
+              rescue => e
+                # ファイル読み込みエラーの場合はnilにして既存画像または画像なしを表示
+                data_url = nil
+              end
+            end
+          %>
+          
+          <% if defined?(data_url) && data_url %>
+            <%= image_tag data_url, class: "w-full h-full object-cover" %>
+          <% elsif has_existing_image %>
+            <%# 新しい画像の処理に失敗した場合は既存画像を表示 %>
+            <%= image_tag @post.image, class: "w-full h-full object-cover" %>
+          <% else %>
+            <%# 既存画像もない場合 %>
+            <div class="w-full h-full bg-gray-200 flex items-center justify-center">
+              <span class="text-gray-500">画像なし</span>
+            </div>
+          <% end %>
+          
+        <% elsif has_existing_image %>
+          <%# 新しい画像はなく、既存画像がある場合 %>
+          <%= image_tag @post.image, class: "w-full h-full object-cover" %>
+          
+        <% else %>
+          <%# 画像がない場合 %>
+          <div class="w-full h-full bg-gray-200 flex items-center justify-center">
+            <span class="text-gray-500">画像なし</span>
+          </div>
+        <% end %>
+      </div>
+
+      <!-- 詳細情報（コンパクト版） -->
+      <div class="p-4">
+        <div class="flex justify-between items-start mb-2">
+          <h4 class="text-lg font-bold text-gray-900 flex-1 mr-2">
+            <%= @post.title.present? ? @post.title : "タイトル未入力" %>
+          </h4>
+          <p class="text-lg font-bold text-blue-600">
+            ¥<%= @post.price.present? ? number_with_delimiter(@post.price) : "0" %>
+          </p>
+        </div>
+
+        <div class="flex items-center text-gray-600 text-sm mb-2">
+          <i class="fas fa-map-marker-alt mr-1"></i>
+          <span><%= @post.fishing_spot&.name || "釣り場未選択" %></span>
+        </div>
+
+        <div class="text-gray-700 text-sm leading-relaxed">
+          <% if @post.description.present? %>
+            <%= truncate(@post.description, length: 100) %>
+          <% else %>
+            <span class="text-gray-400">説明未入力</span>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <!-- 投稿ボタン -->
+    <div class="mt-4 text-center">
+      <% if @post.errors.empty? %>
+        <%= form_with model: @post, local: true, multipart: true, class: "inline" do |form| %>
+          <%= form.hidden_field :title, value: @post.title %>
+          <%= form.hidden_field :description, value: @post.description %>
+          <%= form.hidden_field :price, value: @post.price %>
+          <%= form.hidden_field :fishing_spot_id, value: @post.fishing_spot_id %>
+          
+          <%# 新しい画像がアップロードされている場合のみ、画像も含める %>
+          <% if new_image_uploaded %>
+            <%= form.file_field :image, value: params[:post][:image], style: "display: none;" %>
+          <% end %>
+
+        <% end %>
+      <% else %>
+        <p class="text-red-600 text-sm">エラーを修正してから投稿してください</p>
+      <% end %>
+    </div>
+  </div>
+<% end %>

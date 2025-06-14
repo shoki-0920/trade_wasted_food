@@ -2,35 +2,52 @@
 <h1 class="text-2xl font-bold mb-4">投稿の編集</h1>
 
 <div class="max-w-xl mx-auto">
-<%= form_with(model: @post, local: true, html: { class: "space-y-4" }) do |form| %>
-  <div>
-    <%= form.label :title, "タイトル", class: "block font-medium text-gray-700" %>
-    <%= form.text_field :title, class: "mt-1 block w-full border border-gray-300 rounded p-2" %>
-  </div>
+  <%= form_with(model: @post, local: true, multipart: true, html: { class: "space-y-4" }) do |form| %>
+    <div>
+      <%= form.label :title, "タイトル", class: "block font-medium text-gray-700" %>
+      <%= form.text_field :title, class: "mt-1 block w-full border border-gray-300 rounded p-2" %>
+    </div>
 
-  <div>
-    <%= form.label :description, "説明", class: "block font-medium text-gray-700" %>
-    <%= form.text_area :description, class: "mt-1 block w-full border border-gray-300 rounded p-2" %>
-  </div>
+    <div>
+      <%= form.label :description, "説明", class: "block font-medium text-gray-700" %>
+      <%= form.text_area :description, class: "mt-1 block w-full border border-gray-300 rounded p-2" %>
+    </div>
 
-  <div>
-    <%= form.label :price, "価格（円）", class: "block font-medium text-gray-700" %>
-    <%= form.number_field :price, class: "mt-1 block w-full border border-gray-300 rounded p-2" %>
-  </div>
+    <div>
+      <%= form.label :price, "価格（円）", class: "block font-medium text-gray-700" %>
+      <%= form.number_field :price, class: "mt-1 block w-full border border-gray-300 rounded p-2" %>
+    </div>
 
-  <div>
-    <%= form.label :image, "画像", class: "block font-medium text-gray-700" %>
-    <%= form.file_field :image, class: "mt-1 block w-full" %>
+    <div>
+      <%= form.label :fishing_spot_id, "釣り場", class: "block font-medium text-gray-700" %>
+      <%= form.collection_select :fishing_spot_id, FishingSpot.all, :id, :name, 
+          { prompt: "釣り場を選択してください" }, 
+          { class: "mt-1 block w-full border border-gray-300 rounded p-2" } %>
+    </div>
 
-    <% if @post.image.attached? %>
-      <p class="mt-2">現在の画像:</p>
-      <%= image_tag @post.image, class: "max-w-xs rounded shadow mt-2" %>
-    <% end %>
-  </div>
+    <div>
+      <%= form.label :image, "画像", class: "block font-medium text-gray-700" %>
+      <%= form.file_field :image, class: "mt-1 block w-full" %>
 
-  <div class="flex space-x-4">
-    <%= form.submit "更新する", class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" %>
-    <%= link_to "戻る", post_path(@post), class: "bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400" %>
+      <% if @post.image.attached? %>
+        <p class="mt-2">現在の画像:</p>
+        <%= image_tag @post.image, class: "max-w-xs rounded shadow mt-2" %>
+      <% end %>
+    </div>
+
+    <!-- プレビュー表示エリア -->
+    <div id="preview_container"></div>
+
+    <div class="flex gap-4">
+      <%= form.submit "プレビュー", 
+          formaction: preview_post_path(@post),
+          class: "flex-1 py-3 bg-gray-500 text-white font-semibold rounded-lg hover:bg-gray-600 transition duration-300" %>
+      <%= form.submit "更新", 
+          class: "flex-1 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-300" %>
+    </div>
+  <% end %>
+
+  <div class="text-center mt-4">
+    <%= link_to "戻る", @post, class: "text-blue-600 hover:text-blue-800 underline" %>
   </div>
-<% end %>
 </div>

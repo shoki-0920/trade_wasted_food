@@ -38,7 +38,18 @@
     <%= form.file_field :image, class: "w-full p-3 border border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" %>
   </div>
 
-  <div class="mb-4">
-    <%= form.submit "投稿する", class: "w-full py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-300" %>
+  <div id="preview_container"></div>
+
+    <div class="flex gap-4">
+      <%= form.submit "プレビュー", 
+          formaction: preview_posts_path,
+          class: "flex-1 py-3 bg-gray-500 text-white font-semibold rounded-lg hover:bg-gray-600 transition duration-300" %>
+      <%= form.submit "投稿する", 
+          class: "flex-1 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-300" %>
+    </div>
+  
+
+  <div class="text-center mt-4">
+    <%= link_to "戻る", posts_path, class: "text-blue-600 hover:text-blue-800 underline" %>
   </div>
 <% end %>
