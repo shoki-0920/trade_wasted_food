@@ -17,8 +17,12 @@ Rails.application.routes.draw do
     resource :bookmark, only: %i[create destroy]
 
     collection do
-      # GET /posts/bookmarks → posts#bookmarks
       get :bookmarks
+      post :preview  # 新規作成時のプレビュー
+    end
+
+    member do
+      patch :preview  # POST → PATCH に変更
     end
   end
 

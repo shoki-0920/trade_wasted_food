@@ -73,6 +73,41 @@ end
     @posts = current_user.bookmarked_posts
   end
 
+  def preview
+  if params[:id]
+    # 編集時のプレビュー
+    @post = Post.find(params[:id])
+
+    unless @post.user == current_user
+      redirect_to posts_path, alert: "権限がありません"
+      return
+    end
+
+    @post.assign_attributes(post_params)
+    @edit_mode = true
+    @post_id = params[:id]
+  else
+    # 新規作成時のプレビュー
+    @post = Post.new(post_params)
+    if params[:post][:image].present?
+      @post.image.attach(params[:post][:image])
+    end
+    @post.user = current_user
+    @edit_mode = false
+  end
+
+  # 関連データの読み込み
+  if @post.fishing_spot_id.present?
+    @post.fishing_spot = FishingSpot.find(@post.fishing_spot_id)
+  end
+
+  @post.valid?
+
+  respond_to do |format|
+    format.html { render :preview }  # 従来の画面遷移版
+    format.turbo_stream  # TurboStream版
+  end
+  end
 
 
   private
