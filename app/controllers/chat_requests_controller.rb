@@ -16,7 +16,7 @@ class ChatRequestsController < ApplicationController
         @post.user,        # 受信者（投稿者）
         current_user       # 送信者（申請者）
       ).deliver_now
-      
+
       redirect_to @post, notice: "チャット申請が送信されました。"
     else
       redirect_to @post, alert: "チャット申請の送信に失敗しました。"

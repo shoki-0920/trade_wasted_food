@@ -1,13 +1,13 @@
 # app/mailers/chat_notification_mailer.rb
 class ChatNotificationMailer < ApplicationMailer
-  default from: 'ueharattyo920@gmail.com'
+  default from: "ueharattyo920@gmail.com"
 
   # チャット申請を受けた時の通知
   def chat_request_received(recipient_user, sender_user)
     @recipient = recipient_user
     @sender = sender_user
     @subject = "#{@sender.name}さんからチャット申請が届きました"
-    
+
     mail(
       to: @recipient.email,
       subject: @subject
@@ -19,7 +19,7 @@ class ChatNotificationMailer < ApplicationMailer
     @sender = sender_user
     @recipient = recipient_user
     @subject = "#{@recipient.name}さんがチャット申請を承認しました"
-    
+
     mail(
       to: @sender.email,
       subject: @subject
@@ -32,7 +32,7 @@ class ChatNotificationMailer < ApplicationMailer
     @sender = sender_user
     @message = message
     @subject = "#{@sender.name}さんから新しいメッセージが届きました"
-    
+
     mail(
       to: @recipient.email,
       subject: @subject
