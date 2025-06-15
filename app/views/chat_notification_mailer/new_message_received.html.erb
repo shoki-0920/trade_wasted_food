@@ -1,0 +1,7 @@
+<h2>新しいメッセージが届きました</h2>
+<p><%= @recipient.name %>さん、</p>
+<p><%= @sender.name %>さんから新しいメッセージが届きました：</p>
+<blockquote>
+  <%= simple_format(@message.content) %>
+</blockquote>
+<p>返信するには、アプリにログインしてください。</p>
