@@ -63,12 +63,12 @@ Rails.application.configure do
 
   # Gmail SMTP設定
   config.action_mailer.smtp_settings = {
-    address: 'smtp.gmail.com',
+    address: "smtp.gmail.com",
     port: 587,
-    domain: 'baitrade.com',
-    user_name: ENV['GMAIL_USERNAME'], # 環境変数でGmailアドレスを設定
-    password: ENV['GMAIL_APP_PASSWORD'], # 環境変数でアプリパスワードを設定
-    authentication: 'plain',
+    domain: "baitrade.com",
+    user_name: ENV["GMAIL_USERNAME"], # 環境変数でGmailアドレスを設定
+    password: ENV["GMAIL_APP_PASSWORD"], # 環境変数でアプリパスワードを設定
+    authentication: "plain",
     enable_starttls_auto: true
   }
 
