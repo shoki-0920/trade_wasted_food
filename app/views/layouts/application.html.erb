@@ -6,7 +6,7 @@
   <title>Trade Wasted Food</title>
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
-  <!-- ▼ OGPメタタグ ▼ -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">  <!-- ▼ OGPメタタグ ▼ -->
 <meta property="og:title"       content="<%= @post&.title.presence || 'Trade Wasted Food' %>">
 <meta property="og:description" content="<%= @post&.description.presence || '不要な食品をシェアして無駄をなくすマーケットプレイス' %>">
 <meta property="og:url"         content="<%= request.original_url %>">
@@ -26,8 +26,8 @@
 <meta name="twitter:description"content="<%= @post&.description.presence || '不要な食品をシェアして無駄をなくすマーケットプレイス' %>">
 <!-- ▲ OGPメタタグ ▲ -->
    <!-- Tailwind CSS -->
-  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-
+<!-- Tailwind CSS -->
+<%= stylesheet_link_tag "application", "data-turbo-track": "reload", preload: false %>
   <!-- Importmap + application.js（map.js を含む）を読み込む -->
   <%= javascript_importmap_tags %>
 </head>
@@ -38,26 +38,43 @@
   <% end %>
 
   <div class="flex space-x-4"> 
-    <% if current_user %>
-
-      <%= link_to '新規投稿',new_post_path %>
-      <%= link_to '投稿一覧', posts_path %>
-      <%= link_to "釣り場マップ", fishing_spots_map_path %>
-      <%= link_to "チャット一覧", chat_rooms_path %>
-      <%= link_to 'プロフィール編集', edit_profile_path %>
-      <%= link_to "お気に入り", bookmarks_posts_path, class: 'nav-link' %>
-      <%= button_to 'Logout', '/auth/logout', 
-              method: :get, 
+  <% if current_user %>
+    <%= link_to new_post_path, class: "text-white hover:text-gray-200 transition-colors p-2" do %>
+      <i class="fas fa-plus text-xl" title="新規投稿"></i>
+    <% end %>
+    
+    <%= link_to posts_path, class: "text-white hover:text-gray-200 transition-colors p-2" do %>
+      <i class="fas fa-list text-xl" title="投稿一覧"></i>
+    <% end %>
+    
+    <%= link_to fishing_spots_map_path, class: "text-white hover:text-gray-200 transition-colors p-2" do %>
+      <i class="fas fa-map-marker-alt text-xl" title="釣り場マップ"></i>
+    <% end %>
+    
+    <%= link_to chat_rooms_path, class: "text-white hover:text-gray-200 transition-colors p-2" do %>
+      <i class="fas fa-comments text-xl" title="チャット一覧"></i>
+    <% end %>
+    
+    <%= link_to edit_profile_path, class: "text-white hover:text-gray-200 transition-colors p-2" do %>
+      <i class="fas fa-user text-xl" title="プロフィール編集"></i>
+    <% end %>
+    
+    <%= link_to bookmarks_posts_path, class: "text-white hover:text-gray-200 transition-colors p-2" do %>
+      <i class="fas fa-heart text-xl" title="お気に入り"></i>
+    <% end %>
+    
+    <%= button_to 'Logout', '/auth/logout', 
+            method: :get, 
+            data: { turbo: false },
+            class: "bg-white text-blue-500 font-semibold py-2 px-6 rounded-full shadow-md border border-gray-300 hover:bg-gray-100 transition" %>
+    <% else %>
+    <%= button_to 'Login', '/auth/auth0', 
+              method: :post, 
+              authenticity_token: true, 
               data: { turbo: false },
               class: "bg-white text-blue-500 font-semibold py-2 px-6 rounded-full shadow-md border border-gray-300 hover:bg-gray-100 transition" %>
-      <% else %>
-      <%= button_to '新規登録/Login', '/auth/auth0', 
-                method: :post, 
-                authenticity_token: true, 
-                data: { turbo: false },
-                class: "bg-white text-blue-500 font-semibold py-2 px-6 rounded-full shadow-md border border-gray-300 hover:bg-gray-100 transition" %>
-    <% end %>
-  </div>
+  <% end %>
+</div>
 </header>
 
 <!-- フラッシュメッセージを表示 -->
