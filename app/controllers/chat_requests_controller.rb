@@ -11,6 +11,12 @@ class ChatRequestsController < ApplicationController
     )
 
     if @chat_request.save
+      # 📧 チャット申請受信の通知メールを送信
+      ChatNotificationMailer.chat_request_received(
+        @post.user,        # 受信者（投稿者）
+        current_user       # 送信者（申請者）
+      ).deliver_now
+      
       redirect_to @post, notice: "チャット申請が送信されました。"
     else
       redirect_to @post, alert: "チャット申請の送信に失敗しました。"
@@ -21,10 +27,14 @@ class ChatRequestsController < ApplicationController
 
   def approve
     @chat_request = ChatRequest.find(params[:id])
-    # 申請のステータスを'approved'に変更
     @chat_request.update(status: "approved")
-    # チャットルームを作成
     @chat_room = ChatRoom.create(user1: @chat_request.requester, user2: @chat_request.receiver)
+    #  チャット申請承認の通知メールを送信
+    ChatNotificationMailer.chat_request_approved(
+      @chat_request.requester,  # 申請した人
+      current_user              # 承認した人
+    ).deliver_now
+
     # 承認後、投稿詳細ページにリダイレクト
     redirect_to @chat_room, notice: "チャット申請が承認されました。"
   end
