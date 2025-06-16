@@ -47,7 +47,7 @@ gem "omniauth-rails_csrf_protection", "~> 1.0" # prevents forged authentication 
 
 gem "hotwire-rails"
 
-gem 'font-awesome-rails'
+gem "font-awesome-rails"
 
 gem "gretel"
 gem "image_processing", "~> 1.2"
