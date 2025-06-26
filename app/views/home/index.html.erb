@@ -5,68 +5,107 @@
   <!-- <div class="absolute inset-0 bg-black bg-opacity-20"></div> -->
   
   <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
-    <h1 class="text-3xl sm:text-5xl md:text-7xl text-white font-water font-bold drop-shadow-lg">BEITORE</h1>
+    <h1 class="text-3xl sm:text-5xl md:text-7xl text-white water-brush-regular font-bold drop-shadow-lg">BEITORE</h1>
     <h2 class="mt-2 sm:mt-4 text-sm sm:text-lg md:text-2xl font-bold text-white drop-shadow-md">
       ～～その餌・魚無駄にしていませんか？？～～
     </h2>
   </div>
 </div>
 
-<!-- 第1セクション - モバイルファースト -->
-<div class="px-4 sm:px-8 md:px-16 mb-8 sm:mb-12">
-  <div class="flex flex-col lg:flex-row lg:justify-center lg:gap-8 xl:gap-12 items-center">
-    <div class="text-sm sm:text-base md:text-lg font-bold text-center lg:text-left mb-6 lg:mb-0 lg:flex-1 max-w-2xl fade-in-up fade-delay-0">
-      <p class="mb-2">釣り人の皆さんこんにちは！！ベイトレです！！</p>
-      <p class="mb-2">海に返してもこのように死んでしまうことも多々ありますよね？？</p>
-      <p class="mb-2">釣りは楽しいものですが、魚はつられると弱ってしまいます</p>
-      <p class="mb-2">持って帰るのが調理もめんどくさい、海にそのまま死んだ魚を</p>
-      <p class="mb-2">海に流してもお魚さんに申し訳ない.....</p>
-      <p>かといって周りの方に話しかけずらい方などもいらっしゃるかもしれません</p>
-    </div>
+<div class="container">
+  <!-- ヒーローセクション -->
+  <section class="hero-section fade-in-up">
+    <h1 class="water-brush-regular text-5xl text-white mb-4">釣り人の皆さんへ</h1>
+    <p class="text-white text-opacity-90 text-lg">〜 海の恵みを大切に、みんなでシェアしませんか？ 〜</p>
+  </section>
 
-    <div class="fade-in-up fade-delay-1 flex-shrink-0">
-      <%= image_tag("deadfish.png", class: "rounded-xl w-64 sm:w-72 md:w-80 h-48 sm:h-54 md:h-60 object-cover shadow-lg") %>
+  <!-- 問題提起セクション -->
+  <section class="grid md:grid-cols-2 gap-8 mb-16">
+    <div class="glass-card rounded-2xl p-8 fade-in-up fade-delay-1">
+      <div class="w-20 h-20 bg-gradient-to-br from-red-400 to-red-500 rounded-full flex items-center justify-center mx-auto mb-6">
+        <i class="fas fa-fish text-white text-2xl"></i>
+      </div>
+      <h2 class="text-xl font-bold text-gray-800 mb-4 text-center">魚の命を無駄にしていませんか？</h2>
+      <p class="text-gray-600 leading-relaxed">
+        楽しい釣りの時間。でも、釣った魚をリリースしても弱って死んでしまうことも。
+        調理が面倒で持ち帰らず、かといって死んだ魚を海に流すのも心が痛む...
+      </p>
     </div>
-  </div>
+    
+    <div class="glass-card rounded-2xl p-8 fade-in-up fade-delay-2">
+      <div class="w-20 h-20 bg-gradient-to-br from-orange-400 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-6">
+        <i class="fas fa-trash text-white text-2xl"></i>
+      </div>
+      <h2 class="text-xl font-bold text-gray-800 mb-4 text-center">釣り場の環境も心配</h2>
+      <p class="text-gray-600 leading-relaxed">
+        サビキ釣りの後の汚れや、餌の放置など、釣り場の環境問題も深刻です。
+        美しい海を次の世代にも残すために、私たち釣り人ができることを考えませんか？
+      </p>
+    </div>
+  </section>
+
+  <!-- 画像ショーケース -->
+  <section class="grid md:grid-cols-2 gap-8 mb-16">
+    <div class="relative group rounded-2xl overflow-hidden shadow-2xl fade-in-up fade-delay-3">
+      <%= image_tag("deadfish.png", class: "w-full h-72 object-cover transition-transform duration-300 group-hover:scale-105") %>
+      <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div class="absolute bottom-6 left-6 right-6 text-white">
+          <h3 class="text-lg font-semibold mb-2">リリース後の現実</h3>
+          <p class="text-sm opacity-90">海に返しても、弱った魚は生き延びることができません。</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="relative group rounded-2xl overflow-hidden shadow-2xl fade-in-up fade-delay-4">
+      <%= image_tag("bait.png", class: "w-full h-72 object-cover transition-transform duration-300 group-hover:scale-105") %>
+      <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div class="absolute bottom-6 left-6 right-6 text-white">
+          <h3 class="text-lg font-semibold mb-2">釣り場の環境問題</h3>
+          <p class="text-sm opacity-90">餌の放置やサビキの汚れなど、環境への影響を見直しませんか？</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 解決案セクション -->
+  <section class="glass-card rounded-2xl p-12 text-center fade-in-up fade-delay-5">
+    <div class="w-24 h-24 bg-gradient-to-br from-teal-400 to-teal-500 rounded-full flex items-center justify-center mx-auto mb-8">
+      <i class="fas fa-handshake text-white text-3xl"></i>
+    </div>
+    <h2 class="cherry-bomb-one-regular text-4xl text-gray-800 mb-6">Trade Wasted Food</h2>
+    <p class="text-gray-600 leading-relaxed text-lg max-w-4xl mx-auto">
+      釣った魚を無駄にせず、地域の皆さんとシェアしませんか？<br>
+      新鮮な魚を求めている人と、魚を有効活用したい釣り人をつなぐプラットフォームです。<br><br>
+      <strong class="text-teal-600">魚の命を大切に、海の環境を守りながら、みんなで海の恵みを分かち合いましょう。</strong>
+    </p>
+  </section>
 </div>
 
-<!-- 第2セクション - 順序をモバイルで調整 -->
-<div class="px-4 sm:px-8 md:px-16 mb-8 sm:mb-12">
-  <div class="flex flex-col lg:flex-row lg:justify-center lg:gap-8 xl:gap-12 items-center">
-    <!-- モバイルでは画像を上に表示 -->
-    <div class="order-1 lg:order-1 fade-in-up fade-delay-2 flex-shrink-0 mb-6 lg:mb-0">
-      <%= image_tag("bait.png", class: "rounded-xl w-64 sm:w-72 md:w-80 h-48 sm:h-54 md:h-60 object-cover shadow-lg") %>
-    </div>
-
-    <div class="order-2 lg:order-2 text-sm sm:text-base md:text-lg font-bold text-center lg:text-left lg:flex-1 max-w-2xl fade-in-up fade-delay-3">
-      <p class="mb-2">このように大量のサビキで汚してそのままにしていたり</p>
-      <p class="mb-2">餌をそのまま釣り場に放置しているのをみかけるのも</p>
-      <p>少なくありません</p>
-    </div>
-  </div>
-</div>
-
-<div>
-  <div>①まずは投稿一覧からあなたがいる釣り場・向かう釣り場はどこか見て見ましょう！</div>
-</div>
-
-
-<!-- そこで！セクション -->
-<div class="flex justify-center mt-6 sm:mt-10 flex-col items-center px-4">
+<div class="flex justify-center mt-6 mb-10 sm:mt-10 flex-col items-center px-4">
   <div class="text-2xl sm:text-3xl md:text-5xl cherry-bomb-one-regular bg-blue-200 px-4 sm:px-6 py-2 sm:py-3 rounded inline-block text-center">
-    そこで！！！！
+    〜〜つかいかたはこちらから〜〜
   </div>
   <div class="w-0 h-0 border-l-4 sm:border-l-8 border-r-4 sm:border-r-8 border-t-4 sm:border-t-8 border-l-transparent border-r-transparent border-t-blue-200"></div>
+</div>
+<div class="flex flex-col items-center justify-center px-4 sm:px-8 md:px-16 mb-8 sm:mb-12">
+  <video width="576" autoplay muted loop playsinline controls class="mb-4">
+    <source src="https://i.gyazo.com/f43ad99eb10bf461c9d5701ca59c0008.mp4" type="video/mp4"/>
+  </video>
+  <div class="text-center mb-12">①まずは画面右上のログインボタンからサインアップし、アカウントを作成しましょう！</div>
+  
+  <video width="572" autoplay muted loop playsinline controls class="mb-4">
+    <source src="https://i.gyazo.com/2132d13b16c7b158aeefaa04a8073b04.mp4" type="video/mp4"/>
+  </video>
+  <div class="text-center mb-12">②投稿一覧から気になる投稿を見て、チャット申請を送りましょう！</div>
+
+  <video width="572" autoplay muted loop playsinline controls class="mb-4">
+  <source src="https://i.gyazo.com/b5e16e44871db6f96f86b0c433faa63a.mp4" type="video/mp4"/>
+  </video>
+  <div class="text-center mb-12">③承認すると、チャット可能になりますので、ここからいろんな会話を始めてみてください！</div>
 </div>
 
 <!-- CTA セクション -->
 <div class="flex flex-col items-center text-center mt-8 sm:mt-12 space-y-4 sm:space-y-6 px-4">
-  <div class="text-lg sm:text-2xl md:text-3xl font-extrabold tracking-tight leading-snug max-w-xl text-gray-800">
-    お持ちの釣り餌・釣れた魚で<br>
-    持ち帰らないなというもの、<br>
-    ぜひ釣り人同士で交換してください！
-  </div>
-
   <%= button_to '今すぐ始める', '/auth/auth0', 
               method: :post, 
               authenticity_token: true, 

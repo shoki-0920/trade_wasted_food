@@ -1,16 +1,152 @@
 @import "tailwindcss";
 
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Water+Brush&display=swap');
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+  }
+}
+
 @layer utilities {
   .font-lobster {
     font-family: 'Lobster', cursive;
   }
 
-  .font-water {
-    font-family: 'Water Brush', cursive;
+  .water-brush-regular {
+    font-family: "Water Brush", cursive;
+    font-weight: 400;
+    font-style: normal;
   }
+
   .cherry-bomb-one-regular {
     font-family: "Cherry Bomb One", system-ui;
+    font-weight: 400;
+    font-style: normal;
   }
+
+  /* 海の背景 */
+  .ocean-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, 
+      #87CEEB 0%,     /* 明るい青 */
+      #4682B4 30%,    /* 中間の青 */  
+      #1E6091 60%,    /* 深い青 */
+      #0F4C75 100%    /* 最深部 */
+    );
+    z-index: -1;
+  }
+  
+  /* 波のレイヤー */
+  .wave-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  .wave {
+    position: absolute;
+    width: 120%;
+    height: 120px;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" fill="%23ffffff" fill-opacity="0.1"/></svg>') repeat-x;
+    animation: wave-move 8s ease-in-out infinite;
+  }
+  
+  .wave:nth-child(1) {
+    top: 10%;
+    animation-delay: 0s;
+    opacity: 0.15;
+  }
+  
+  .wave:nth-child(2) {
+    top: 20%;
+    animation-delay: -2s;
+    animation-duration: 10s;
+    opacity: 0.1;
+  }
+  
+  .wave:nth-child(3) {
+    top: 30%;
+    animation-delay: -4s;
+    animation-duration: 12s;
+    opacity: 0.08;
+  }
+  
+  .wave:nth-child(4) {
+    top: 70%;
+    animation-delay: -1s;
+    animation-duration: 15s;
+    opacity: 0.05;
+    transform: rotate(180deg);
+  }
+  
+  /* 泡のエフェクト */
+  .bubble {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    animation: bubble-rise 6s infinite ease-in;
+  }
+  
+  /* ガラス効果用のユーティリティクラス */
+  .glass-effect {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  .glass-header {
+    background: rgba(59, 130, 246, 0.9);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .glass-footer {
+    background: rgba(31, 41, 55, 0.9);
+    backdrop-filter: blur(10px);
+  }
+  
+  .glass-card {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  /* フラッシュメッセージ用 */
+  .flash-glass-success {
+    background: rgba(34, 197, 94, 0.9);
+    backdrop-filter: blur(10px);
+  }
+  
+  .flash-glass-error {
+    background: rgba(239, 68, 68, 0.9);
+    backdrop-filter: blur(10px);
+  }
+  
+  .flash-glass-warning {
+    background: rgba(245, 158, 11, 0.9);
+    backdrop-filter: blur(10px);
+  }
+
+  /* 既存のアニメーション */
   @keyframes fade-in-up {
     from {
       opacity: 0;
@@ -31,4 +167,97 @@
   .fade-delay-1 { animation-delay: 0.5s; }
   .fade-delay-2 { animation-delay: 1s; }
   .fade-delay-3 { animation-delay: 1.5s; }
+  
+  /* 既存のグラデーション（レガシー） */
+  .ocean-gradient {
+    background: linear-gradient(180deg, #87CEEB 0%, #4682B4 50%, #191970 100%);
+  }
+
+  .wave-layer {
+    position: absolute;
+    width: 120%;
+    height: 100%;
+    left: -10%;
+    top: 0;
+  }
+
+  .wave-layer canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@layer components {
+  /* コンテンツ用のスタイル */
+  .content {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+  }
+  
+  /* ナビゲーションアイコン */
+  .nav-icon {
+    @apply text-white no-underline p-2 rounded-lg transition-colors duration-300;
+  }
+  
+  .nav-icon:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+  
+  /* ログインボタン */
+  .ocean-login-btn {
+    @apply bg-white text-blue-600 font-semibold py-2 px-6 rounded-full cursor-pointer transition-colors duration-300;
+  }
+  
+  .ocean-login-btn:hover {
+    @apply bg-gray-100;
+  }
+}
+
+/* キーフレームアニメーション */
+@keyframes wave-move {
+  0%, 100% {
+    transform: translateX(-25%);
+  }
+  50% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes bubble-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(100vh) scale(0);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(90vh) scale(1);
+  }
+  90% {
+    opacity: 1;
+    transform: translateY(10vh) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(0) scale(0);
+  }
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  .wave {
+    height: 80px;
+  }
+  
+  .ocean-background {
+    background: linear-gradient(180deg, 
+      #87CEEB 0%,
+      #4682B4 40%,
+      #1E6091 70%,
+      #0F4C75 100%
+    );
+  }
 }
