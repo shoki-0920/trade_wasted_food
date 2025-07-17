@@ -66,5 +66,6 @@
 | その他 | Tailwind CSS |
 
 ### ER図
-[![Image from Gyazo](https://i.gyazo.com/e82304dca6c7425ac35605908d7d375a.png)](https://gyazo.com/e82304dca6c7425ac35605908d7d375a)
+<img width="1854" height="1282" alt="image" src="https://github.com/user-attachments/assets/d0493238-1507-4059-a56f-0cb9edf3a90f" />
+
 
